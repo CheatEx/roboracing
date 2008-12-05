@@ -6,5 +6,13 @@ package org.osll.roboracing.world;
  * @author zan
  */
 public interface PhysicalConstraints {
+	
+	public double getMaxVelocity();
+	
+	public double getMaxAcceleration();
+	
+	public double getMaxAngularSpeed();
+	
+	public double getDragCoefficient();
 
 }
