@@ -14,5 +14,7 @@ public interface PhysicalConstraints {
 	public double getMaxAngularSpeed();
 	
 	public double getDragCoefficient();
+	
+	public double getVisionRadius();
 
 }
