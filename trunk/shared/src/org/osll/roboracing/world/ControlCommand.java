@@ -9,9 +9,4 @@ public interface ControlCommand {
 	
 	public double getAngularSpeed();
 	
-	/**
-	 * Name of robot who must receive command.
-	 * @return
-	 */
-	public String getRobotName();
 }

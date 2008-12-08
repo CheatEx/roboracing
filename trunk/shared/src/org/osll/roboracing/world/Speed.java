@@ -7,5 +7,5 @@ public interface Speed {
 
 	public double getVX();
 	
-	public void getVY();
+	public double getVY();
 }
