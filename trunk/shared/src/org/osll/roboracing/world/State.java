@@ -7,5 +7,10 @@ import java.util.Collection;
  */
 public interface State extends Map {
 
+		
+	/**
+	 * 
+	 * @return
+	 */
 	public Collection<Robot> getRobots();
 }
