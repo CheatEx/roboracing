@@ -16,5 +16,7 @@ public interface PhysicalConstraints {
 	public double getDragCoefficient();
 	
 	public double getVisionRadius();
+	
+	public double getWorldRadius();
 
 }
