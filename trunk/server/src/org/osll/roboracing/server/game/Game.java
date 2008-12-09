@@ -1,7 +1,5 @@
 package org.osll.roboracing.server.game;
 
-import java.util.Collection;
-
 import org.osll.roboracing.world.ControlCommand;
 import org.osll.roboracing.world.Map;
 import org.osll.roboracing.world.State;
@@ -27,7 +25,12 @@ public interface Game {
 	 */
 	public void setMap(Map map) throws IllegalStateException;
 	
-	public void run(double time, Collection<ControlCommand> commands);
+	/**
+	 * Starts game for a given portion of time.
+	 * @param time simulated time
+	 * @param commands map of commands by robot names
+	 */
+	public void run(double time, java.util.Map<String, ControlCommand> commands);
 	
 	/**
 	 * @return current game time
