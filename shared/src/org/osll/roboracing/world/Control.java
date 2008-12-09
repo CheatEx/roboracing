@@ -1,7 +1,7 @@
 package org.osll.roboracing.world;
 
 /**
- * Its general touchpoint between server and robo clients.
+ * Interface for controlling robot, receive telemetry and general game info.
  *  
  * @author zan
  */
@@ -11,15 +11,18 @@ public interface Control {
 	 * This method isn't cheat-safe (:
 	 * @param roboName name of robot, who received picture
 	 * @return robots telemetry
+	 * @throws IllegalStateException if game not
 	 */
-	public Telemetry getTelemetry();
+	public Telemetry getTelemetry() throws IllegalStateException;
 	
 	/**
 	 * And this too :(
 	 * @param command command for robot
-	 * @throws IllegalStateException server isn't ready for accepting new command
+	 * @throws IllegalStateException if game not
 	 */
-	public void sendCommand(ControlCommand command);
+	public void sendCommand(ControlCommand command) throws IllegalStateException;
+	
+	public boolean isGameStarted();
 	
 	public PhysicalConstraints getPhysicalConstraints();
 }

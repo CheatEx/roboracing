@@ -10,4 +10,6 @@ public interface Robot extends WorldObject, Speed {
 	 * @return robot's name
 	 */
 	public String getName();
+	
+	public Team getTeam();
 }
