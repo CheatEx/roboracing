@@ -1,16 +1,20 @@
 package org.osll.roboracing.world;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
  * @author zan
  */
-public interface State extends Map {
+public class State extends Map {
 
-		
-	/**
-	 * 
-	 * @return
-	 */
-	public Collection<Robot> getRobots();
+	private ArrayList<Robot> robots;
+	
+	public Collection<Robot> getRobots() {
+		return robots;
+	}
+
+	public void setRobots(ArrayList<Robot> robots) {
+		this.robots = robots;
+	}
 }

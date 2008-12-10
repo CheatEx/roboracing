@@ -3,10 +3,25 @@ package org.osll.roboracing.world;
 /**
  * @author zan
  */
-public interface ControlCommand {
+public class ControlCommand {
 
-	public double getAcceleration();
+	private double acceleration;
 	
-	public double getAngularSpeed();
+	private double angularSpeed;
 	
+	public double getAcceleration() {
+		return acceleration;
+	}
+	
+	public double getAngularSpeed() {
+		return angularSpeed;
+	}
+
+	public void setAcceleration(double acceleration) {
+		this.acceleration = acceleration;
+	}
+
+	public void setAngularSpeed(double angularSpeed) {
+		this.angularSpeed = angularSpeed;
+	}
 }
