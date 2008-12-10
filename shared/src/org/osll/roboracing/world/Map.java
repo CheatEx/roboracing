@@ -1,15 +1,40 @@
 package org.osll.roboracing.world;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
  * @author zan
  */
-public interface Map {
+public class Map {
 	
-	public Collection<Checkpoint> getCheckpoints();
+	private ArrayList<Checkpoint> checkpoints;
 	
-	public Collection<Hill> getHills();
+	private ArrayList<Hill> hills;
 	
-	public Collection<Pit> getPits();
+	private ArrayList<Pit> pits;
+	
+	public Collection<Checkpoint> getCheckpoints() {
+		return checkpoints;
+	}
+	
+	public Collection<Hill> getHills() {
+		return hills;
+	}
+	
+	public Collection<Pit> getPits() {
+		return pits;
+	}
+
+	public void setCheckpoints(ArrayList<Checkpoint> checkpoints) {
+		this.checkpoints = checkpoints;
+	}
+
+	public void setHills(ArrayList<Hill> hills) {
+		this.hills = hills;
+	}
+
+	public void setPits(ArrayList<Pit> pits) {
+		this.pits = pits;
+	}
 }

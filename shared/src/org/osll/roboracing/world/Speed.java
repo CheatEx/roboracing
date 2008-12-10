@@ -5,7 +5,7 @@ package org.osll.roboracing.world;
  */
 public interface Speed {
 
-	public double getVX();
-	
-	public double getVY();
+	public double getVx();
+
+	public double getVy();
 }

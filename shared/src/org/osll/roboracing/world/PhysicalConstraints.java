@@ -1,22 +1,69 @@
 package org.osll.roboracing.world;
 
 /**
- * It interface for some physical constraints applied to our robots.
+ * Container for some physical constraints applied to our robots.
  * 
  * @author zan
  */
-public interface PhysicalConstraints {
+public class PhysicalConstraints {
 	
-	public double getMaxVelocity();
+	private double maxVelocity;
 	
-	public double getMaxAcceleration();
+	private double maxAcceleration;
 	
-	public double getMaxAngularSpeed();
+	private double maxAngularSpeed;
 	
-	public double getDragCoefficient();
+	private double dragCoefficient;
 	
-	public double getVisionRadius();
+	private double visionRadius;
 	
-	public double getWorldRadius();
+	private double worldRadius;
 
+	public double getMaxVelocity() {
+		return maxVelocity;
+	}
+
+	public void setMaxVelocity(double maxVelocity) {
+		this.maxVelocity = maxVelocity;
+	}
+
+	public double getMaxAcceleration() {
+		return maxAcceleration;
+	}
+
+	public void setMaxAcceleration(double maxAcceleration) {
+		this.maxAcceleration = maxAcceleration;
+	}
+
+	public double getMaxAngularSpeed() {
+		return maxAngularSpeed;
+	}
+
+	public void setMaxAngularSpeed(double maxAngularSpeed) {
+		this.maxAngularSpeed = maxAngularSpeed;
+	}
+
+	public double getDragCoefficient() {
+		return dragCoefficient;
+	}
+
+	public void setDragCoefficient(double dragCoefficient) {
+		this.dragCoefficient = dragCoefficient;
+	}
+
+	public double getVisionRadius() {
+		return visionRadius;
+	}
+
+	public void setVisionRadius(double visionRadius) {
+		this.visionRadius = visionRadius;
+	}
+
+	public double getWorldRadius() {
+		return worldRadius;
+	}
+
+	public void setWorldRadius(double worldRadius) {
+		this.worldRadius = worldRadius;
+	}
 }

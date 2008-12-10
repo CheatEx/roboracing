@@ -3,10 +3,26 @@ package org.osll.roboracing.world;
 /**
  * @author zan
  */
-public interface Coordinate {
+public class Coordinate {
 	
-	public double getX();
+	private double x;
 	
-	public double getY();
+	private double y;
 
+	public double getX() {
+		return x;
+	}
+
+	public double getY() {
+		return y;
+	}
+
+	public void setX(double x) {
+		this.x = x;
+	}
+
+	public void setY(double y) {
+		this.y = y;
+	}
+	
 }
