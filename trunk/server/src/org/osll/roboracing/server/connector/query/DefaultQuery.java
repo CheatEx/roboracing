@@ -14,6 +14,10 @@ public class DefaultQuery implements Serializable {
 	public enum Type {
 		GET_CONNECT, // запрос типа "Привет" отправляется первым в соединении
 		PHYSICAL_CONSTRAINTS,
+		TELEMETRY,
+		IS_STARTED,
+		COMMAND,
+		TIME_COUNTDOWN,
 		UNKNOWN
 	}
 	
