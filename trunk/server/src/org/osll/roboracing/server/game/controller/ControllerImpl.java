@@ -33,9 +33,7 @@ public class ControllerImpl implements GameController {
 		tel.setSelf(
 				findRobot(state.getRobots(), name));
 		
-		
-		
-		return null;
+		return tel;
 	}
 
 	@Override
