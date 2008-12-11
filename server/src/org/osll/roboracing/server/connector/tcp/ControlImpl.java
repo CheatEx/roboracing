@@ -3,11 +3,20 @@ package org.osll.roboracing.server.connector.tcp;
 import java.io.IOException;
 import java.net.Socket;
 
+import org.osll.roboracing.server.connector.query.CommandRejectResponse;
+import org.osll.roboracing.server.connector.query.CommandQuery;
 import org.osll.roboracing.server.connector.query.DefaultResponse;
+import org.osll.roboracing.server.connector.query.ErrorResponse;
+import org.osll.roboracing.server.connector.query.IsStartedQuery;
+import org.osll.roboracing.server.connector.query.IsStartedResponse;
 import org.osll.roboracing.server.connector.query.LoginRejectedResponse;
 import org.osll.roboracing.server.connector.query.PhysicalConstraintsQuery;
 import org.osll.roboracing.server.connector.query.PhysicalConstraintsResponse;
 import org.osll.roboracing.server.connector.query.RobotConnectQuery;
+import org.osll.roboracing.server.connector.query.TelemetryQuery;
+import org.osll.roboracing.server.connector.query.TelemetryResponse;
+import org.osll.roboracing.server.connector.query.TimeCountDownQuery;
+import org.osll.roboracing.server.connector.query.TimeCountDownResponse;
 import org.osll.roboracing.world.Control;
 import org.osll.roboracing.world.ControlCommand;
 import org.osll.roboracing.world.PhysicalConstraints;
@@ -40,31 +49,49 @@ public class ControlImpl extends SocketProcessor implements Control {
 	@Override
 	synchronized public PhysicalConstraints getPhysicalConstraints() {
 		write(socket,new PhysicalConstraintsQuery());
-		
-		DefaultResponse response = (DefaultResponse) read(socket);
-		if (!(response instanceof PhysicalConstraintsResponse)) {
-			throw new IllegalStateException("Recived error");
-		}		
-		return ((PhysicalConstraintsResponse)response).getConstraints();
+		return ((PhysicalConstraintsResponse)read(socket)).getConstraints();
 	}
 
 	@Override
 	synchronized public Telemetry getTelemetry() throws IllegalStateException {
-		// TODO Auto-generated method stub
-		return null;
+		TelemetryQuery query = new TelemetryQuery();
+		query.setName(name);
+		write(socket,query);
+		
+		DefaultResponse response = (DefaultResponse) read(socket);
+
+		if(response instanceof ErrorResponse)
+			throw ((ErrorResponse)response).getException();
+
+		if(!(response instanceof TelemetryResponse))
+			throw new IllegalStateException("Exchange error");
+		
+		return ((TelemetryResponse)response).getTelemetry();
 	}
 
 	@Override
 	synchronized public boolean isGameStarted() {
-		// TODO Auto-generated method stub
-		return false;
+		write(socket,new IsStartedQuery());
+		return ((IsStartedResponse)read(socket)).isStarted();
 	}
 
 	@Override
 	synchronized public void sendCommand(ControlCommand command)
 			throws IllegalStateException {
-		// TODO Auto-generated method stub
+		CommandQuery query = new CommandQuery();
+		query.setCommand(command);
+		write(socket,query);
+		
+		DefaultResponse response = (DefaultResponse) read(socket);
+		
+		if(response instanceof CommandRejectResponse)
+			throw new IllegalStateException("Command was rejected by server");
+	}
 
+	@Override
+	synchronized public long getTimeToStart() {
+		write(socket, new TimeCountDownQuery());
+		return ((TimeCountDownResponse)read(socket)).getTimeCountDown();
 	}
 
 }

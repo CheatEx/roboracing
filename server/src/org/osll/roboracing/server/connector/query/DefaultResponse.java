@@ -17,6 +17,12 @@ public class DefaultResponse implements Serializable {
 		LOGIN_ACCEPTED, // подтверждение соединения
 		LOGIN_REJECTED, // отклонение соединения
 		PHYSICAL_CONSTRAINTS,
+		TELEMETRY,
+		ERROR,
+		IS_STARTED,
+		COMMAND_ACCEPTED,
+		COMMAND_REJECTED,
+		TIME_COUNTDOWN,
 		UNKNOWN
 	}
 	

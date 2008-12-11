@@ -1,5 +1,6 @@
 package org.osll.roboracing.world;
 
+
 /**
  * Interface for controlling robot, receive telemetry and general game info.
  *  
@@ -25,4 +26,10 @@ public interface Control {
 	public boolean isGameStarted();
 	
 	public PhysicalConstraints getPhysicalConstraints();
+	
+	/**
+	 * Получить время до старта. Время может меняться.  
+	 * @return время в милисекундах до ориентировачного старта  
+	 */
+	public long getTimeToStart();
 }
