@@ -1,6 +1,8 @@
 package org.osll.roboracing.server.game.controller;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.osll.roboracing.server.game.Game;
 import org.osll.roboracing.server.game.GameController;
@@ -17,7 +19,22 @@ import org.osll.roboracing.world.Telemetry;
  */
 public class ControllerImpl implements GameController {
 
+	private static TelemetryFactory telemetryFactory =
+			TelemetryFactory.instance();
+	
+	private Map<String, ControlCommand> commands =
+			new HashMap<String, ControlCommand>();
+	
 	private Game game;
+	
+	/**
+	 * Game, that will be controlled. Game must be provided with appropriate map
+	 * and added robots.  
+	 * @param game The Game
+	 */
+	public ControllerImpl(Game game) {
+		this.game = game;
+	}
 	
 	@Override
 	public State getGameState() {
@@ -27,19 +44,20 @@ public class ControllerImpl implements GameController {
 	@Override
 	public Telemetry getTelemetryFor(String name) {
 		State state = getGameState();
+		Robot self = findRobot(state.getRobots(), name);
 		
-		Telemetry tel = new Telemetry();
+		Telemetry tel =	telemetryFactory.createTelemetry(state, 
+				new VisionRadiusFilter(self, getConstraints().getVisionRadius()));
+		
 		tel.setTime(game.getTime());
-		tel.setSelf(
-				findRobot(state.getRobots(), name));
+		tel.setSelf(self);
 		
 		return tel;
 	}
 
 	@Override
 	public void putCommand(String name, ControlCommand command) {
-		// TODO Auto-generated method stub
-
+		commands.put(name, command);
 	}
 
 	@Override

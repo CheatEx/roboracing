@@ -7,7 +7,7 @@ import org.osll.roboracing.world.Telemetry;
 
 /**
  * Server-private interface for game instance. Designed as thread-safe wrapper
- * around {@link Game}. Intended to serving of connectors. Clients should
+ * around {@link Game}. Intended to serving of robot connectors. Clients should
  * provide name of robot, their present.
  * 
  * @author zan
