@@ -47,6 +47,10 @@ public class WorldRound extends JPanel {
 		if(getGraphics()!=null)
 			paintComponent(getGraphics());
 	}
+	
+	public void setWorldRadius(double r) {
+		m_WorldRadius = r;
+	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
