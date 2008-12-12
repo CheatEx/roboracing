@@ -31,6 +31,11 @@ public class WorldRound extends JPanel {
 	/** a radius of the while round */
 	private double m_WorldRadius;
 
+	public WorldRound(double worldRadius) {
+		super();
+		m_WorldRadius = worldRadius;
+	}
+
 	/**
 	 * refresh state
 	 * 
@@ -39,7 +44,8 @@ public class WorldRound extends JPanel {
 	 */
 	public void setState(State state) {
 		m_State = state;
-		paintComponent(getGraphics());
+		if(getGraphics()!=null)
+			paintComponent(getGraphics());
 	}
 
 	@Override
@@ -53,9 +59,9 @@ public class WorldRound extends JPanel {
 		Dimension dim = getSize();
 		int side = Math.min(dim.height, dim.width);
 		g.setColor(BACKGROUND_COLOR);
-		g.fillOval(0, 0, side, side);
+		g.fillOval(0, 0, side-1, side-1);
 		g.setColor(BOUNDS_COLOR);
-		g.drawOval(0, 0, side, side);
+		g.drawOval(0, 0, side-1, side-1);
 	}
 
 	private void paintObjects(Graphics g) {
@@ -63,35 +69,62 @@ public class WorldRound extends JPanel {
 			drawRound(hill, HILL_COLOR);
 		for (Pit pit : m_State.getPits())
 			drawRound(pit, PIT_COLOR);
-		for (Robot robot : m_State.getRobots()) {
-			Color color = robot.getTeam() == Team.Explorers ? EXPLORER_COLOR
-					: INTERCEPTOR_COLOR;
-			drawRound(robot, color);
-		}
 		for (Checkpoint checkpoint : m_State.getCheckpoints())
 			drawCross(checkpoint, CHECKPOINT_COLOR);
+		for (Robot robot : m_State.getRobots())
+		{
+			drawRound(robot, getTeamColor(robot.getTeam()));
+			writeName(robot);
+		}
+	}
+	
+	private static Color getTeamColor(Team team)
+	{
+		return team == Team.Explorers ? EXPLORER_COLOR
+				: INTERCEPTOR_COLOR;
 	}
 
 	private void drawRound(WorldObject o, Color color) {
 		Graphics g = getGraphics();
-		g.setColor(HILL_COLOR);
-		double side = o.getRadius() / m_WorldRadius;
-		g.fillOval((int) (o.getX() / (2. * m_WorldRadius)),
-				(int) (o.getY() / (2. * m_WorldRadius)), (int) (2. * side),
-				(int) (2. * side));
+		g.setColor(color);
+		double k = getNormCoef();
+		int r =(int) (o.getRadius() * k); //radius in screen srd
+		int x = (int) (o.getX()*k); //screen crd
+		int y = (int) (o.getY()*k);
+		g.fillOval(x-r,y-r,2*r, 2*r);
 		g.setColor(BOUNDS_COLOR);
-		g.drawOval((int) (o.getX() / (2. * m_WorldRadius)),
-				(int) (o.getY() / (2. * m_WorldRadius)), (int) (2. * side),
-				(int) (2. * side));
+		g.drawOval(x-r,y-r, 2*r, 2*r);
 	}
 
 	private void drawCross(Coordinate crd, Color color) {
 		Graphics g = getGraphics();
 		g.setColor(CHECKPOINT_COLOR);
-		int x = (int) (crd.getX() / (2 * m_WorldRadius));
-		int y = (int) (crd.getY() / (2 * m_WorldRadius));
-		g.drawLine(x - CROSS_SIZE / 2, y - CROSS_SIZE / 2, x + CROSS_SIZE / 2,
-				y + CROSS_SIZE / 2);
+		double k = getNormCoef();
+		int x = (int) (crd.getX() *k);
+		int y = (int) (crd.getY() *k);
+		g.drawLine(x - CROSS_SIZE / 2, y - CROSS_SIZE / 2,
+				x + CROSS_SIZE / 2,	y + CROSS_SIZE / 2);
+		g.drawLine(x + CROSS_SIZE / 2, y - CROSS_SIZE / 2,
+				x - CROSS_SIZE / 2,	y + CROSS_SIZE / 2);
+	}
+	
+	private void writeName(Robot robot)
+	{
+		Graphics g = getGraphics();
+		g.setColor(getTeamColor(robot.getTeam()));
+		double k = getNormCoef();
+		int x = (int) (robot.getX()*k);
+		int y = (int) ((robot.getY()-robot.getRadius())*k)-1;
+		g.drawString(robot.getName(), x, y);
+	}
+	
+	/**
+	 * normalize coefficient
+	 * @return
+	 */
+	private double getNormCoef() {
+		int size = Math.min(getSize().width, getSize().height);
+		return (double) size/(2.*m_WorldRadius);
 	}
 
 }

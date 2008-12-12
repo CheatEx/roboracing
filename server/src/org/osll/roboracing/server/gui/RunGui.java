@@ -20,9 +20,22 @@ public class RunGui {
 	public static void main(String[] args) {
 		JFrame f = new JFrame(TITLE);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setContentPane(new GameBoard(new DummyGameController()));
-		f.setSize(100, 100);
+		GameBoard board = new GameBoard(new DummyGameController());
+		f.setContentPane(board);
+		f.setSize(500, 500);
 		f.setVisible(true);
+		SwingAnimator(board);
 	}
+	public static void SwingAnimator(GameBoard board){
+		Thread th = new Thread();
+	    try{
+	    	for(;;)
+	    	{
+	    		board.update();
+	    		th.sleep(500);
+	    	}
+	    }
+	    catch(InterruptedException e){}
+	  }
 
 }
