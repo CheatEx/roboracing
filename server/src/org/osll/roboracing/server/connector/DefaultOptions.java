@@ -10,5 +10,9 @@ public class DefaultOptions {
 	public static String getHost() {
 		return host;
 	}
+
+	public static int getTcpPort() {
+		return 7777;
+	}
 	
 }
