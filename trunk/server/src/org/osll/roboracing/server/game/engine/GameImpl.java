@@ -9,16 +9,16 @@ import org.osll.roboracing.world.PhysicalConstraints;
 import org.osll.roboracing.world.Robot;
 import org.osll.roboracing.world.State;
 import org.osll.roboracing.world.Team;
-import org.osll.roboracing.world.WorldObject;
 
 /**
  * Game engine implementation. This class are not thread-safe!
  * @author zan
- *
  */
 public class GameImpl implements Game {
 
 	private Map map;
+	
+	private InitialPlacingStrategy placer;
 	
 	private double time = 0;
 	
@@ -26,21 +26,19 @@ public class GameImpl implements Game {
 	
 	private PhysicalConstraints constraints;
 	
+	public GameImpl(PhysicalConstraints constraints) {
+		this.constraints = constraints;
+		placer = new InitialPlacingStrategy(constraints.getWorldRadius());
+	}
+	
 	@Override
 	public void addRobot(String name, Team team)
 			throws IllegalStateException, IllegalArgumentException {
 		checkStarted();
 		if (robots.containsKey(name))
 			throw new IllegalArgumentException("Robot alredy exist in game");
-		//initial coordinates and radius are not correct! watch it
-		robots.put(name, new Robot(name, team, new WorldObject(0,0,0)));
-	}
-	
-	@Override
-	public void setPhysicalConstraints(PhysicalConstraints constraints)
-			throws IllegalStateException {
-		checkStarted();
-		this.constraints = constraints;
+		robots.put(name, 
+				new Robot(name, team, placer.placeNew(team)));
 	}
 
 	@Override

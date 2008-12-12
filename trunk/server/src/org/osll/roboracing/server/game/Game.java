@@ -23,9 +23,6 @@ public interface Game {
 	 */
 	public void addRobot(String name, Team team)
 			throws IllegalStateException, IllegalArgumentException;
-
-	public void setPhysicalConstraints(PhysicalConstraints constraints)
-			throws IllegalStateException;
 	
 	/**
 	 * Return physical constraints of game. Result of this method must be

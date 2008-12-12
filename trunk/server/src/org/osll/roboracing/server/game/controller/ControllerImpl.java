@@ -80,8 +80,8 @@ public class ControllerImpl implements GameController {
 	 */
 	public ControllerImpl(Game game) {
 		this.game = game;
-		wantToLogin.put( Team.Explorers, new HashMap<String, LoginInfo>());
-		wantToLogin.put( Team.Interceptors, new HashMap<String, LoginInfo>());
+		for (Team team : Team.values())
+			wantToLogin.put( team, new HashMap<String, LoginInfo>());
 	}
 	
 	@Override

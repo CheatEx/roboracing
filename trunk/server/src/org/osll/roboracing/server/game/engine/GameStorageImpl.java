@@ -6,6 +6,7 @@ import java.util.Vector;
 import org.osll.roboracing.server.game.GameController;
 import org.osll.roboracing.server.game.GameStorage;
 import org.osll.roboracing.server.game.controller.ControllerImpl;
+import org.osll.roboracing.world.PhysicalConstraints;
 import org.osll.roboracing.world.Team;
 
 /**
@@ -41,7 +42,7 @@ public class GameStorageImpl implements GameStorage {
 			}
 		}
 		// если дошли досюда то не нашли подходящей игры. Делаем новую.
-	    GameController gc = new ControllerImpl(new GameImpl());
+	    GameController gc = new ControllerImpl(new GameImpl(new PhysicalConstraints()));
 	    gc.registerPlayer(name, team);
 	    addGame(gc);
 	    return gc;
