@@ -6,6 +6,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
+import org.osll.roboracing.server.connector.DefaultOptions;
 import org.osll.roboracing.server.connector.rmi.Control;
 import org.osll.roboracing.server.connector.rmi.ServerConnection;
 import org.osll.roboracing.world.Team;
@@ -16,7 +17,7 @@ public class ServerConnectionImpl implements org.osll.roboracing.world.ServerCon
 	
 	public ServerConnectionImpl() {
 		try {
-			Registry registry = LocateRegistry.getRegistry();
+			Registry registry = LocateRegistry.getRegistry(DefaultOptions.getHost());
 			service = (ServerConnection)registry.lookup("Roboracing/LoginServer");
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
