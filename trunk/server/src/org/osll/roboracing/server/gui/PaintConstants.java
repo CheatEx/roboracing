@@ -7,7 +7,7 @@ import java.awt.Color;
  * @author oakjumper
  *
  */
-public interface ColorConstants {
+public interface PaintConstants {
 
 	Color BACKGROUND_COLOR = Color.WHITE;
 	Color BOUNDS_COLOR = Color.BLACK;
@@ -17,4 +17,6 @@ public interface ColorConstants {
 	Color PIT_COLOR = Color.DARK_GRAY;
 	Color CHECKPOINT_COLOR = Color.RED;
 	
+	/**side of checkpoint cross*/
+	int CROSS_SIZE=10;
 }
