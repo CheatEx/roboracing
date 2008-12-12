@@ -9,6 +9,7 @@ import org.osll.roboracing.world.PhysicalConstraints;
 import org.osll.roboracing.world.Robot;
 import org.osll.roboracing.world.State;
 import org.osll.roboracing.world.Team;
+import org.osll.roboracing.world.WorldObject;
 
 /**
  * Game engine implementation. This class are not thread-safe!
@@ -31,7 +32,8 @@ public class GameImpl implements Game {
 		checkStarted();
 		if (robots.containsKey(name))
 			throw new IllegalArgumentException("Robot alredy exist in game");
-		robots.put(name, new Robot(name, team));
+		//initial coordinates and radius are not correct! watch it
+		robots.put(name, new Robot(name, team, new WorldObject(0,0,0)));
 	}
 	
 	@Override
