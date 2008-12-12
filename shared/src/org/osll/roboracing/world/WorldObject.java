@@ -1,9 +1,11 @@
 package org.osll.roboracing.world;
 
+import java.io.Serializable;
+
 /**
  * @author zan
  */
-public class WorldObject extends Coordinate {
+public class WorldObject extends Coordinate implements Serializable {
 
 	private double radius;
 	

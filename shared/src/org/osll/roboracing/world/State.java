@@ -1,12 +1,13 @@
 package org.osll.roboracing.world;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
 /**
  * @author zan
  */
-public class State extends Map {
+public class State extends Map implements Serializable {
 
 	private ArrayList<Robot> robots;
 	

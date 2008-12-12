@@ -22,7 +22,7 @@ public class GameImpl implements Game {
 	
 	private double time = 0;
 	
-	private HashMap<String, Robot> robots;
+	private HashMap<String, Robot> robots = new HashMap<String, Robot>();
 	
 	private PhysicalConstraints constraints;
 	

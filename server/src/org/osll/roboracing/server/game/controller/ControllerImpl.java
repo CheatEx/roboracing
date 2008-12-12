@@ -147,7 +147,7 @@ public class ControllerImpl implements GameController {
 
 	@Override
 	public long getMaxPlayers(Team team) {
-		return 4;
+		return 1;
 	}
 
 	@Override
