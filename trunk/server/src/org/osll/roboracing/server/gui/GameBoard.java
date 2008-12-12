@@ -1,9 +1,13 @@
 package org.osll.roboracing.server.gui;
 
+import java.applet.Applet;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 
-import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.SwingWorker;
 import javax.swing.Timer;
@@ -29,11 +33,23 @@ public class GameBoard extends JPanel {
 
 	public GameBoard(GameController game) {
 		m_Game = game;
-		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-		add(m_WorldMap = new WorldRound());
-		initTimer();
+		setLayout(new GridBagLayout());
+		add(m_WorldMap = new WorldRound(m_Game.getConstraints().getWorldRadius()), 
+				new GridBagConstraints(0,0,
+						1,1, 
+						1.0, 1.0, 
+						GridBagConstraints.CENTER, 
+						GridBagConstraints.BOTH, 
+						new Insets(5,5,5,5),
+						0,0));
+		m_WorldMap.setState(game.getGameState());
+//		initTimer();
 	}
 
+	public void update()
+	{
+		m_WorldMap.setState(m_Game.getGameState());
+	}
 	/**
 	 * launch animation
 	 */
@@ -47,19 +63,27 @@ public class GameBoard extends JPanel {
 				return null;
 			}
 
+			@Override
+			protected void done() {
+				System.out.println(new Date());
+			}
+
+			
 		};
 
 		ActionListener l = new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				m_WorldMap.setState(m_Game.getGameState());
 				if (updater.isDone())
 					updater.execute();
 			}
 
 		};
 		updater.execute();
-		new Timer(DELAY, l).start();
+		Timer timer = new Timer(DELAY, l);
+		timer.start();
 	}
 
 }
