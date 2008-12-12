@@ -1,9 +1,11 @@
 package org.osll.roboracing.world;
 
+import java.io.Serializable;
+
 /**
  * @author zan
  */
-public class Coordinate {
+public class Coordinate implements Serializable {
 	
 	private double x;
 	

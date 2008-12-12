@@ -74,7 +74,7 @@ public class GameServer implements Runnable {
 		}
 	      
 	    // bind the Object Reference in Naming
-		serviceName= "Roboracing/GameServer"+count;
+		serviceName= "Roboracing_GameServer"+count;
 		count++;
 	    NameComponent path[] = null;
 		try {

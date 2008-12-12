@@ -1,9 +1,11 @@
 package org.osll.roboracing.world;
 
+import java.io.Serializable;
+
 /**
  * @author zan
  */
-public class Checkpoint extends WorldObject {
+public class Checkpoint extends WorldObject implements Serializable {
 
 	public Checkpoint(double x, double y) {
 		super(x, y, 0);

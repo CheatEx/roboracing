@@ -1,6 +1,8 @@
 package org.osll.roboracing.world;
 
-public enum Team {
+import java.io.Serializable;
+
+public enum Team implements Serializable {
 	Explorers,
 	Interceptors
 }

@@ -1,9 +1,11 @@
 package org.osll.roboracing.world;
 
+import java.io.Serializable;
+
 /**
  * @author zan
  */
-public class ControlCommand {
+public class ControlCommand implements Serializable {
 
 	private double acceleration;
 	

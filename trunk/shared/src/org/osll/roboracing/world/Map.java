@@ -1,12 +1,13 @@
 package org.osll.roboracing.world;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
 /**
  * @author zan
  */
-public class Map {
+public class Map implements Serializable{
 	
 	private ArrayList<Checkpoint> checkpoints;
 	

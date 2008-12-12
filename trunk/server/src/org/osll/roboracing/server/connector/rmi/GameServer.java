@@ -15,7 +15,7 @@ public class GameServer implements Runnable {
 	private String name;
 	
 	public GameServer(GameController controller) {
-		name = "Roboracing/GameServer" + counter;
+		name = "Roboracing_GameServer" + counter;
 		++counter;
 		try {
 			engine = new ControlImpl(controller);
