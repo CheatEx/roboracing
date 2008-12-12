@@ -46,7 +46,7 @@ public class LoginServer extends SocketProcessor implements Runnable {
 			GameController c = GameStorageImpl.getInstance().register(rcq.getName(), rcq.getTeam());
 			
 			ControlResponse resp = new ControlResponse();
-			resp.setPort(c.getTransport().getTcpPort());
+			resp.setPort(c.getTransport().getUdpPort());
 			write(socket,packet.getSocketAddress(),resp);
 		}
 	}
