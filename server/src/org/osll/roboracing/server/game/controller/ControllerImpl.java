@@ -41,8 +41,7 @@ public class ControllerImpl implements GameController {
 			new HashMap<String, ControlCommand>();
 	private Lock commandsLock = new ReentrantLock();
 	
-	private Lock gameLock = new ReentrantLock();
-	private Condition newStateReady = gameLock.newCondition();
+	private Object newStateReady = new Object();
 	
 	//Last run results cache
 	private State lastState;
@@ -87,7 +86,7 @@ public class ControllerImpl implements GameController {
 	@Override
 	public State getGameState() {
 		try {
-			newStateReady.await();
+			newStateReady.wait();
 		} catch (InterruptedException e) {
 			throw new RuntimeException(
 					"Thread interrupted while waiting for new game state", e);
@@ -205,12 +204,14 @@ public class ControllerImpl implements GameController {
 		@Override
 		public void run() {
 			commandsLock.lock();
-			game.run(GAME_STEP, (Map<String, ControlCommand>) commands.clone());
+			Map<String, ControlCommand> copy =
+				(Map<String, ControlCommand>) commands.clone();
 			commandsLock.unlock();
+			game.run(GAME_STEP, copy);
 			
 			lastState = game.getState();
 			lastTime = game.getTime();
-			newStateReady.signalAll();
+			newStateReady.notifyAll();
 		}
 	}
 }
