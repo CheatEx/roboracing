@@ -1,5 +1,10 @@
 package org.osll.roboracing.server.game;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import javax.swing.event.ChangeListener;
+
 import org.osll.roboracing.world.Team;
 
 /**
@@ -21,4 +26,15 @@ public interface GameStorage {
 	 * @param game
 	 */
 	public void addGame(GameController game);
+	
+	/**
+	 * @return all games
+	 */
+	ArrayList<GameController> getGames();
+	
+	/**
+	 * add a listener of game list changes
+	 * @param l listener of a game list
+	 */
+	void addChangeListener(ChangeListener l);
 }

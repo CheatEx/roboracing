@@ -1,18 +1,29 @@
 package org.osll.roboracing.server.gui;
 
 import java.applet.Applet;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingWorker;
 import javax.swing.Timer;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.osll.roboracing.server.game.GameController;
+import org.osll.roboracing.server.game.GameStorage;
+import org.osll.roboracing.server.game.engine.GameStorageImpl;
 
 /**
  * General view panel binds world map with state updater
@@ -20,70 +31,123 @@ import org.osll.roboracing.server.game.GameController;
  * @author oakjumper
  * 
  */
-public class GameBoard extends JPanel {
+public class GameBoard extends JPanel implements ChangeListener {
 
 	/** Map view */
 	private WorldRound m_WorldMap;
 
 	/** Game state holder */
 	private GameController m_Game;
+	
+	private JComboBox m_GameSelector;
 
 	/** update time interval */
 	private static int DELAY = 100;
 
-	public GameBoard(GameController game) {
-		m_Game = game;
+	/**
+	 * internal usage: run without GameStorageImpl
+	 * @param game test game
+	 */
+	GameBoard(GameController game) {
+		this();
+		setGame(game);
+	}
+	
+	public GameBoard() {
 		setLayout(new GridBagLayout());
-		add(m_WorldMap = new WorldRound(m_Game.getConstraints().getWorldRadius()), 
-				new GridBagConstraints(0,0,
-						1,1, 
+		int y=0;
+		add(m_WorldMap = new WorldRound(1.), 
+				new GridBagConstraints(0,y++,
+						2,1, 
 						1.0, 1.0, 
 						GridBagConstraints.CENTER, 
 						GridBagConstraints.BOTH, 
-						new Insets(5,5,5,5),
+						new Insets(5,5,0,5),
 						0,0));
-		m_WorldMap.setState(game.getGameState());
-//		initTimer();
+		add(new JLabel("Game "),
+				new GridBagConstraints(0,y,
+						1,0, 
+						0.0, 0.0, 
+						GridBagConstraints.WEST, 
+						GridBagConstraints.NONE, 
+						new Insets(5,5,0,0),
+						0,0));
+		add(createGameSelector(),
+			new GridBagConstraints(1,y,
+					1,0, 
+					1.0, 0.0, 
+					GridBagConstraints.NORTHWEST, 
+					GridBagConstraints.NONE, 
+					new Insets(5,5,5,5),
+					0,0));
+		GameStorageImpl.getInstance().addChangeListener(this);
+		stateChanged(null);
+		launchAnimation();
 	}
+	
+	private JComboBox createGameSelector() {
+		m_GameSelector = new JComboBox();
+		m_GameSelector.addItemListener(new ItemListener() {
 
-	public void update()
-	{
-		m_WorldMap.setState(m_Game.getGameState());
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				int idx = m_GameSelector.getSelectedIndex();
+				GameController game = GameStorageImpl.getInstance().getGames().get(idx);
+				setGame(game);
+			}
+			
+		});
+		return m_GameSelector;
 	}
+	
 	/**
-	 * launch animation
+	 * update game list
 	 */
-	private void initTimer() {
-		// this guy will slowly update the world map in background
-		final SwingWorker updater = new SwingWorker<Void, Void>() {
+	private void updateGameSelector() {
+		ArrayList<GameController> games = GameStorageImpl.getInstance().getGames();
+		m_GameSelector.removeAllItems();
+		for(int i=1; i<games.size();++i)
+			m_GameSelector.addItem(""+i);
+		m_GameSelector.setSelectedIndex(games.indexOf(m_Game));
+		
+	}
+	
+	/**
+	 * switch game
+	 * @param game new game
+	 */
+	private void setGame(GameController game) {
+		m_Game = game;
+		m_WorldMap.setWorldRadius(game.getConstraints().getWorldRadius());
+	}
+
+	public void launchAnimation(){
+		Thread th = new Thread() {
 
 			@Override
-			protected Void doInBackground() throws Exception {
-				m_WorldMap.setState(m_Game.getGameState());
-				return null;
+			public void run() {
+				for(;;)
+				{
+					if(m_Game!=null)
+						m_WorldMap.setState(m_Game.getGameState());
+		    		try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 			}
-
-			@Override
-			protected void done() {
-				System.out.println(new Date());
-			}
-
 			
 		};
-
-		ActionListener l = new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				m_WorldMap.setState(m_Game.getGameState());
-				if (updater.isDone())
-					updater.execute();
-			}
-
-		};
-		updater.execute();
-		Timer timer = new Timer(DELAY, l);
-		timer.start();
+		th.start();
 	}
-
+	
+	/**
+	 * invoke when game list was changed
+	 */
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		updateGameSelector();
+	}
 }

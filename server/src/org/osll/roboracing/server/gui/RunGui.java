@@ -1,6 +1,12 @@
 package org.osll.roboracing.server.gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Date;
+
 import javax.swing.JFrame;
+import javax.swing.SwingWorker;
+import javax.swing.Timer;
 
 import org.osll.roboracing.server.game.controller.DummyGameController;
 
@@ -13,7 +19,7 @@ import org.osll.roboracing.server.game.controller.DummyGameController;
 public class RunGui {
 
 	public static final String TITLE = "Roboracing";
-
+	
 	/**
 	 * @param args
 	 */
@@ -24,18 +30,5 @@ public class RunGui {
 		f.setContentPane(board);
 		f.setSize(500, 500);
 		f.setVisible(true);
-		SwingAnimator(board);
 	}
-	public static void SwingAnimator(GameBoard board){
-		Thread th = new Thread();
-	    try{
-	    	for(;;)
-	    	{
-	    		board.update();
-	    		th.sleep(500);
-	    	}
-	    }
-	    catch(InterruptedException e){}
-	  }
-
 }

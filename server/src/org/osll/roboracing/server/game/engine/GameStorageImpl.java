@@ -1,7 +1,10 @@
 package org.osll.roboracing.server.game.engine;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Vector;
+
+import javax.swing.event.ChangeListener;
 
 import org.osll.roboracing.server.game.GameController;
 import org.osll.roboracing.server.game.GameStorage;
@@ -17,10 +20,12 @@ public class GameStorageImpl implements GameStorage {
 
     static private GameStorage instance = null;
     
-    private Collection<GameController> storage = null;
+    private ArrayList<GameController> storage = null;
+    private ArrayList<ChangeListener> listeners = null;
     
     private GameStorageImpl() {
-    	storage = new Vector<GameController>();
+    	storage = new ArrayList<GameController>();
+    	listeners = new ArrayList<ChangeListener>();
 	}
     
     static public GameStorage getInstance() {
@@ -31,6 +36,8 @@ public class GameStorageImpl implements GameStorage {
 	@Override
 	synchronized public void addGame(GameController game) {
 		storage.add(game);
+		for(ChangeListener l: listeners)
+			l.stateChanged(null);
 	}
 
 	@Override
@@ -47,5 +54,16 @@ public class GameStorageImpl implements GameStorage {
 	    addGame(gc);
 	    return gc;
 	}
+
+	public synchronized ArrayList<GameController> getGames() {
+		return storage;
+	}
+
+	@Override
+	public void addChangeListener(ChangeListener l) {
+		listeners.add(l);
+	}
+	
+	
 
 }
