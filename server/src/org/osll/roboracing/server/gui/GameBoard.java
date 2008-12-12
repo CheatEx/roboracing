@@ -42,7 +42,7 @@ public class GameBoard extends JPanel implements ChangeListener {
 	private JComboBox m_GameSelector;
 
 	/** update time interval */
-	private static int DELAY = 100;
+	private static int DELAY = 500;
 
 	/**
 	 * internal usage: run without GameStorageImpl
@@ -131,7 +131,7 @@ public class GameBoard extends JPanel implements ChangeListener {
 					if(m_Game!=null)
 						m_WorldMap.setState(m_Game.getGameState());
 		    		try {
-						Thread.sleep(500);
+						Thread.sleep(DELAY);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
