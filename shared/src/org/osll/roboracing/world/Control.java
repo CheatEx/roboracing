@@ -23,13 +23,13 @@ public interface Control {
 	 */
 	public void sendCommand(ControlCommand command) throws IllegalStateException;
 	
-	public boolean isGameStarted();
+	public boolean isGameStarted() throws IllegalStateException;;
 	
-	public PhysicalConstraints getPhysicalConstraints();
+	public PhysicalConstraints getPhysicalConstraints() throws IllegalStateException;
 	
 	/**
 	 * Получить время до старта. Время может меняться.  
 	 * @return время в милисекундах до ориентировачного старта  
 	 */
-	public long getTimeToStart();
+	public long getTimeToStart() throws IllegalStateException;;
 }
