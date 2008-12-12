@@ -4,6 +4,12 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.osll.roboracing.server.game.Game;
 import org.osll.roboracing.server.game.GameController;
@@ -22,31 +28,50 @@ import org.osll.roboracing.world.Telemetry;
  */
 public class ControllerImpl implements GameController {
 
+	private static final double GAME_STEP = 0.1;
+
+	private static final int UPDATE_RATE = 100;
+
 	private static TelemetryFactory telemetryFactory =
 			TelemetryFactory.instance();
 	
-	private Map<String, ControlCommand> commands =
-			new HashMap<String, ControlCommand>();
-	
 	private Game game;
+
+	private HashMap<String, ControlCommand> commands =
+			new HashMap<String, ControlCommand>();
+	private Lock commandsLock = new ReentrantLock();
+	
+	private Lock gameLock = new ReentrantLock();
+	private Condition newStateReady = gameLock.newCondition();
+	
+	//Last run results cache
+	private State lastState;
+	public double lastTime;
+	
 	private boolean started = false;
+	
 	private Date startTime = new Date(0); // ориентировачное время старта игры
+	
+	private ScheduledExecutorService executor =
+			Executors.newSingleThreadScheduledExecutor();
 	
 	/**
 	 * набор объектов, которые предоставляют внешний интерфейс для этой игры
 	 */
 	private GameTransport transport = new GameTransport(this);
-	
+
 	private class LoginInfo {
 		public String name = "";
 		public Team team = null;
 		public boolean isConnected = false;
 		public Date queryTime = new Date();
 	}
+	
 	/**
 	 * учет списка подавших заявку на полдключение
 	 */
-	private HashMap<Team, HashMap<String, LoginInfo>> wantToLogin = new HashMap<Team, HashMap<String,LoginInfo>>();
+	private HashMap<Team, HashMap<String, LoginInfo>> wantToLogin =
+			new HashMap<Team, HashMap<String,LoginInfo>>();
 
 	/**
 	 * Game, that will be controlled. Game must be provided with appropriate map
@@ -61,7 +86,13 @@ public class ControllerImpl implements GameController {
 	
 	@Override
 	public State getGameState() {
-		return game.getState();
+		try {
+			newStateReady.await();
+		} catch (InterruptedException e) {
+			throw new RuntimeException(
+					"Thread interrupted while waiting for new game state", e);
+		}
+		return lastState;
 	}
 
 	@Override
@@ -72,7 +103,7 @@ public class ControllerImpl implements GameController {
 		Telemetry tel =	telemetryFactory.createTelemetry(state, 
 				new VisionRadiusFilter(self, getConstraints().getVisionRadius()));
 		
-		tel.setTime(game.getTime());
+		tel.setTime(lastTime);
 		tel.setSelf(self);
 		
 		return tel;
@@ -80,15 +111,27 @@ public class ControllerImpl implements GameController {
 
 	@Override
 	public void putCommand(String name, ControlCommand command) {
+		commandsLock.lock();
 		commands.put(name, command);
+		commandsLock.unlock();
 	}
 
 	@Override
 	public void start() {
-		// TODO Auto-generated method stub
+		addRegisteredToGame();
+		
+		executor.scheduleAtFixedRate(new GameRunner(),
+				UPDATE_RATE, UPDATE_RATE, TimeUnit.MILLISECONDS);
+		
 		started = true;
 	}
 	
+	private void addRegisteredToGame() {
+		for (Team teamIt : wantToLogin.keySet())
+			for (String nameIt : wantToLogin.get(teamIt).keySet())
+				game.addRobot(nameIt, teamIt);
+	}
+
 	@Override
 	public PhysicalConstraints getConstraints() {
 		return game.getPhysicalConstraints();
@@ -137,13 +180,12 @@ public class ControllerImpl implements GameController {
 			}
 		}
 		if(allConnected && getPlayers(Team.Explorers) == getMaxPlayers(Team.Explorers)
-				  && getPlayers(Team.Interceptors) == getMaxPlayers(Team.Interceptors))
-		{
+				  && getPlayers(Team.Interceptors) == getMaxPlayers(Team.Interceptors))	{
 			startTime = new Date(new Date().getTime()+10000);
 			start();
 		}
+		
 		return true;
-
 	}
 
 	@Override
@@ -156,5 +198,19 @@ public class ControllerImpl implements GameController {
 	@Override
 	public boolean isStarted() {
 		return started;
+	}
+	
+	private final class GameRunner implements Runnable {
+		@SuppressWarnings("unchecked")
+		@Override
+		public void run() {
+			commandsLock.lock();
+			game.run(GAME_STEP, (Map<String, ControlCommand>) commands.clone());
+			commandsLock.unlock();
+			
+			lastState = game.getState();
+			lastTime = game.getTime();
+			newStateReady.signalAll();
+		}
 	}
 }
