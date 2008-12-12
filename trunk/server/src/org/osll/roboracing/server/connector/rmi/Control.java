@@ -18,14 +18,14 @@ public interface Control extends Remote {
 	 * @return robots telemetry
 	 * @throws IllegalStateException if game not
 	 */
-	public Telemetry getTelemetry() throws IllegalStateException,RemoteException;
+	public Telemetry getTelemetry(String name) throws IllegalStateException,RemoteException;
 	
 	/**
 	 * And this too :(
 	 * @param command command for robot
 	 * @throws IllegalStateException if game not
 	 */
-	public void sendCommand(ControlCommand command) throws IllegalStateException,RemoteException;
+	public void sendCommand(String name, ControlCommand command) throws IllegalStateException,RemoteException;
 	
 	public boolean isGameStarted() throws RemoteException;
 	

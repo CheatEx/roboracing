@@ -11,6 +11,8 @@ public class GameTransport {
 	
 	private org.osll.roboracing.server.connector.tcp.GameServer tcpServer = null;
 	private org.osll.roboracing.server.connector.udp.GameServer udpServer = null;
+	private org.osll.roboracing.server.connector.rmi.GameServer rmiServer = null;
+	
 	public enum Type {
 		TCP,
 		UDP,
@@ -23,6 +25,8 @@ public class GameTransport {
 		new Thread(tcpServer).start();
 		udpServer = new org.osll.roboracing.server.connector.udp.GameServer(controller);
 		new Thread(udpServer).start();
+		rmiServer = new org.osll.roboracing.server.connector.rmi.GameServer(controller);
+		new Thread(rmiServer).start();
 	}
 	
 	
@@ -34,4 +38,7 @@ public class GameTransport {
 		return udpServer.getPort();
 	}
 	
+	public String getRmiServiceName() {
+		return rmiServer.getServiceName();
+	}
 }
