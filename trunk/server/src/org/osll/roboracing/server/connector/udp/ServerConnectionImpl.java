@@ -2,10 +2,15 @@ package org.osll.roboracing.server.connector.udp;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketAddress;
 
+import org.osll.roboracing.server.connector.DefaultOptions;
 import org.osll.roboracing.server.connector.query.ControlResponse;
+import org.osll.roboracing.server.connector.query.DefaultQuery;
 import org.osll.roboracing.server.connector.query.RobotConnectQuery;
 import org.osll.roboracing.world.Control;
 import org.osll.roboracing.world.ServerConnection;
@@ -19,16 +24,16 @@ public class ServerConnectionImpl extends SocketProcessor implements ServerConne
 	String host = null;
 	int port = 0;
 	
-	public ServerConnectionImpl(String host, int port) {
-		this.host = host;
-		this.port = port;
+	public ServerConnectionImpl() {
+		this.host = DefaultOptions.getHost();
+		this.port = DefaultOptions.getUdpPort();
 	}
 	
 	@Override
 	synchronized public Control connect(String name, Team team)
 			throws IllegalStateException, IOException {
-		DatagramSocket socket = new DatagramSocket(new InetSocketAddress(host,port));
-		
+		DatagramSocket socket = new DatagramSocket();
+		socket.connect(new InetSocketAddress(host,port));	
 		RobotConnectQuery query = new RobotConnectQuery();
 		query.setName(name);
 		query.setTeam(team);

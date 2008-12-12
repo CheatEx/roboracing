@@ -12,7 +12,7 @@ public class Server {
 		new Thread(new LoginServer(7777)).start();
 //		new Thread(new org.osll.roboracing.server.connector.corba.LoginServer()).start();
 //		new Thread(new org.osll.roboracing.server.connector.rmi.LoginServer()).start();
-		new Thread(new org.osll.roboracing.server.connector.udp.LoginServer(7778)).start();
+		new Thread(new org.osll.roboracing.server.connector.udp.LoginServer()).start();
 	}
 
 }

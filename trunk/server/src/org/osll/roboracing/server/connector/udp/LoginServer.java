@@ -5,6 +5,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 
+import org.osll.roboracing.server.connector.DefaultOptions;
 import org.osll.roboracing.server.connector.query.ControlResponse;
 import org.osll.roboracing.server.connector.query.DefaultQuery;
 import org.osll.roboracing.server.connector.query.LoginRejectedResponse;
@@ -16,9 +17,9 @@ public class LoginServer extends SocketProcessor implements Runnable {
 
 	private DatagramSocket socket = null;
 	
-	public LoginServer(int port) {
+	public LoginServer() {
 		try {
-			socket = new DatagramSocket(port);
+			socket = new DatagramSocket(DefaultOptions.getUdpPort());
 		} catch (SocketException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
