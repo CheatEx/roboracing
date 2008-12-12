@@ -6,7 +6,6 @@ import java.net.Socket;
 
 import org.osll.roboracing.server.connector.query.ControlResponse;
 import org.osll.roboracing.server.connector.query.DefaultQuery;
-import org.osll.roboracing.server.connector.query.LoginConfirmationResponse;
 import org.osll.roboracing.server.connector.query.LoginRejectedResponse;
 import org.osll.roboracing.server.connector.query.RobotConnectQuery;
 import org.osll.roboracing.server.game.GameController;
