@@ -9,11 +9,11 @@ import java.util.Collection;
  */
 public class Map implements Serializable{
 	
-	private ArrayList<Checkpoint> checkpoints;
+	private Collection<Checkpoint> checkpoints;
 	
-	private ArrayList<Hill> hills;
+	private Collection<Hill> hills;
 	
-	private ArrayList<Pit> pits;
+	private Collection<Pit> pits;
 	
 	public Collection<Checkpoint> getCheckpoints() {
 		return checkpoints;
@@ -27,15 +27,15 @@ public class Map implements Serializable{
 		return pits;
 	}
 
-	public void setCheckpoints(ArrayList<Checkpoint> checkpoints) {
+	public void setCheckpoints(Collection<Checkpoint> checkpoints) {
 		this.checkpoints = checkpoints;
 	}
 
-	public void setHills(ArrayList<Hill> hills) {
+	public void setHills(Collection<Hill> hills) {
 		this.hills = hills;
 	}
 
-	public void setPits(ArrayList<Pit> pits) {
+	public void setPits(Collection<Pit> pits) {
 		this.pits = pits;
 	}
 }
