@@ -15,4 +15,8 @@ public class DefaultOptions {
 		return 7777;
 	}
 	
+	public static int getUdpPort() {
+		return 7778;
+	}
+	
 }

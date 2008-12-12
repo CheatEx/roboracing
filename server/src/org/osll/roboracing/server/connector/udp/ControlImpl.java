@@ -34,7 +34,8 @@ public class ControlImpl extends SocketProcessor implements Control {
 	private Team team = null;
 	
 	public ControlImpl(String host, int port, String name, Team team) throws IOException {
-		socket = new DatagramSocket(new InetSocketAddress(host,port));
+		socket = new DatagramSocket();
+		socket.connect(new InetSocketAddress(host,port));
 		this.name = name;
 		this.team = team;
 		

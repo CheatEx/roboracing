@@ -52,6 +52,7 @@ public class SocketProcessor {
 		try {
 			ObjectOutputStream s = new ObjectOutputStream(os);
 			s.writeObject(object);
+			s.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -24,7 +24,7 @@ public class ClientConnectionFactory {
 	    	con = new org.osll.roboracing.server.connector.tcp.ServerConnectionImpl(DefaultOptions.getHost(),DefaultOptions.getTcpPort());
 	    	break;
 	    case UDP:
-	    	con = new org.osll.roboracing.server.connector.udp.ServerConnectionImpl(DefaultOptions.getHost(),DefaultOptions.getTcpPort());
+	    	con = new org.osll.roboracing.server.connector.udp.ServerConnectionImpl();
 	    	break;
 		default:
 			break;
