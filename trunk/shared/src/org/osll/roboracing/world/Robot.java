@@ -12,9 +12,12 @@ public class Robot extends WorldObject implements Speed {
 	private double vx;
 	
 	private double vy;
+	
+	public static final double RADIUS = 3.0;
 
-	public Robot(String name, Team team, WorldObject body) {
-		super(body);
+	public Robot(String name, Team team, Coordinate c) {
+		//XXX robot's radius magic there!!!
+		super(c.getX(), c.getY(), RADIUS);
 		this.name = name;
 		this.team = team; 
 	}
@@ -45,5 +48,10 @@ public class Robot extends WorldObject implements Speed {
 
 	public void setVy(double vy) {
 		this.vy = vy;
+	}
+
+	@Override
+	public void setRadius(double radius) {
+		throw new UnsupportedOperationException("Radius change not allowed for Robot");
 	}
 }
