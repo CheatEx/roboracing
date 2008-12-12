@@ -34,7 +34,7 @@ public class ServerConnectionImpl extends SocketProcessor implements ServerConne
 		write(socket,query);
 		
 		ControlResponse response = (ControlResponse) read(socket);
-				
+		System.out.println("Try to connect control to " + host + ":" + response.getPort());
 		return new ControlImpl(host,response.getPort(), name, team);
 	}
 

@@ -1,15 +1,19 @@
 package org.osll.roboracing.server.game.controller;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Vector;
 import java.util.Map;
 
 import org.osll.roboracing.server.game.Game;
 import org.osll.roboracing.server.game.GameController;
+import org.osll.roboracing.server.game.GameTransport;
 import org.osll.roboracing.world.ControlCommand;
 import org.osll.roboracing.world.PhysicalConstraints;
 import org.osll.roboracing.world.Robot;
 import org.osll.roboracing.world.State;
+import org.osll.roboracing.world.Team;
 import org.osll.roboracing.world.Telemetry;
 
 /**
@@ -28,12 +32,30 @@ public class ControllerImpl implements GameController {
 	private Game game;
 	
 	/**
+	 * набор объектов, которые предоставляют внешний интерфейс для этой игры
+	 */
+	private GameTransport transport = new GameTransport();
+	
+	private class LoginInfo {
+		public String name = "";
+		public Team team = null;
+		public boolean isConnected = false;
+		public Date queryTime = new Date();
+	}
+	/**
+	 * учет списка подавших заявку на полдключение
+	 */
+	private HashMap<Team, Vector<LoginInfo> > wantToLogin = new HashMap<Team, Vector<LoginInfo>>();
+
+	/**
 	 * Game, that will be controlled. Game must be provided with appropriate map
 	 * and added robots.  
 	 * @param game The Game
 	 */
 	public ControllerImpl(Game game) {
 		this.game = game;
+		wantToLogin.put( Team.Explorers, new Vector<LoginInfo>());
+		wantToLogin.put( Team.Interceptors, new Vector<LoginInfo>());
 	}
 	
 	@Override
@@ -77,5 +99,28 @@ public class ControllerImpl implements GameController {
 				return robot;
 		}
 		throw new IllegalArgumentException("No robot with name "+name+" found");
+	}
+
+	@Override
+	public long getMaxPlayers(Team team) {
+		return 4;
+	}
+
+	@Override
+	synchronized public long getPlayers(Team team) {
+		return wantToLogin.get(team).size();
+	}
+
+	@Override
+	synchronized public void registerPlayer(String name, Team team) {
+		LoginInfo info = new LoginInfo();
+		info.name = name;
+		info.team = team;
+		wantToLogin.get(team).add(info);
+	}
+
+	@Override
+	public GameTransport getTransport() {
+		return transport;
 	}
 }

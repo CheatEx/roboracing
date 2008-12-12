@@ -3,6 +3,7 @@ package org.osll.roboracing.server.game;
 import org.osll.roboracing.world.ControlCommand;
 import org.osll.roboracing.world.PhysicalConstraints;
 import org.osll.roboracing.world.State;
+import org.osll.roboracing.world.Team;
 import org.osll.roboracing.world.Telemetry;
 
 /**
@@ -35,4 +36,22 @@ public interface GameController {
 	 * @param command command for robot
 	 */
 	public void putCommand(String name, ControlCommand command);
+	
+	
+	/**
+	 *  Получить максимально возможное число игроков в команде
+	 */
+	public long getMaxPlayers(Team team);
+	
+	/**
+	 * получить текущее число игроков в команде
+	 * @param team
+	 * @return
+	 */
+	public long getPlayers(Team team);
+	
+	
+	public void registerPlayer(String name, Team team);
+	
+	public GameTransport getTransport();
 }
