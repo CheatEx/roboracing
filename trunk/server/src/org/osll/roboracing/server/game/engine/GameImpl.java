@@ -1,5 +1,8 @@
 package org.osll.roboracing.server.game.engine;
 
+import static org.osll.roboracing.server.game.Utils.*;
+import static java.lang.Math.*;
+
 import java.util.HashMap;
 
 import org.osll.roboracing.server.game.Game;
@@ -78,12 +81,13 @@ public class GameImpl implements Game {
 	 * Производит рассчёт новой координаты робота.
 	 * XXX сделан тупо: аппроксимируем траекторию окружностью, на основании
 	 * начальной скорости и считаем перемещение по ней уже с учётом ускорения.
+	 * XXX вмясо неоптимально, но должно работать.
 	 * @param robot
 	 * @param runTime 
 	 * @param command 
 	 */
 	private void calcNewCoord(Robot robot, double runTime, ControlCommand command) {
-		double linearSpeed = Utils.module(robot);
+		double linearSpeed = module((Speed)robot);
 		//Положительный радиус считаем, что окружность расположена справа, и 
 		//наоборот, отрицательный - слева.
 		//R = V/W, где R - радиус аппроксимирующей окружности, V - начальная скорость
@@ -99,13 +103,39 @@ public class GameImpl implements Game {
 		Coordinate normal =  buildNormal(robot);
 		if (wrongDirection(robot, normal, radius > 0)) {
 			normal.setX(-normal.getX());
-			normal.setY(normal.getY());
+			normal.setY(-normal.getY());
 		}
+		//масштабируем его на радиус
+		double normalLength = module(normal);
+		double proportion = normalLength/radius;
+		normal.setX(normal.getX()*proportion);
+		normal.setY(normal.getY()*proportion);
+		//теперь он указывает на центр аппроксимирующей окружности
+		
+		//находим сам центр
+		Coordinate center = plus(robot, normal);
+		//минус наша нормаль - это координата робота в СК центра окружности
+		Coordinate translatedRobot =
+			new Coordinate(-normal.getX(), -normal.getY());
+		//поворачиваем робота вокруг центра
+		translatedRobot.setX(translatedRobot.getX()*cos(angle));
+		translatedRobot.setY(translatedRobot.getY()*sin(angle));
+		//возвращаемся в исходную систему коордиинат
+		robot.setX(center.getX() + translatedRobot.getX());
+		robot.setY(center.getY() + translatedRobot.getY());
+
+		//теперь обновляем скорость
+		linearSpeed += command.getAcceleration()*runTime;
+		double speedAngle = atan(robot.getVy()/robot.getVx());
+		speedAngle += angle;
+		robot.setVx(linearSpeed*cos(speedAngle));
+		robot.setVy(linearSpeed*sin(speedAngle));
+		//во срань получилась...
 	}
 
 	private boolean wrongDirection(Speed robot, Coordinate normal, boolean right) {
-		// TODO Auto-generated method stub
-		return false;
+		double thing = robot.getVx()*normal.getY() - robot.getVy()*normal.getX();
+		return thing > 0 == right;
 	}
 
 	private Coordinate buildNormal(Robot robot) {
