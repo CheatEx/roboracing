@@ -13,7 +13,8 @@ public class Robot extends WorldObject implements Speed {
 	
 	private double vy;
 
-	public Robot(String name, Team team) {
+	public Robot(String name, Team team, WorldObject body) {
+		super(body);
 		this.name = name;
 		this.team = team; 
 	}

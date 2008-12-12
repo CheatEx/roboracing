@@ -5,10 +5,14 @@ package org.osll.roboracing.world;
  */
 public class Checkpoint extends WorldObject {
 
-	@Override
-	public double getRadius() {
-		return 0;
+	public Checkpoint(double x, double y) {
+		super(x, y, 0);
 	}
+
+//	@Override
+//	public double getRadius() {
+//		return 0;
+//	}
 
 	@Override
 	public void setRadius(double radius) {
