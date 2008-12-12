@@ -27,6 +27,11 @@ public interface Game {
 	public void setPhysicalConstraints(PhysicalConstraints constraints)
 			throws IllegalStateException;
 	
+	/**
+	 * Return physical constraints of game. Result of this method must be
+	 * constant over game run time. 
+	 * @return game physical constraints
+	 */
 	public PhysicalConstraints getPhysicalConstraints();
 	
 	/**
@@ -55,7 +60,7 @@ public interface Game {
 
 	/**
 	 * Snapshot of world at current time.
-	 * XXX should return copy of internal state?
+	 * Must return copy of internal state.
 	 * 
 	 * @return
 	 */
