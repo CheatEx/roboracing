@@ -136,7 +136,8 @@ public class ControllerImpl implements GameController {
 				allConnected = allConnected && wantToLogin.get(teamIt).get(nameIt).isConnected;
 			}
 		}
-		if(allConnected)
+		if(allConnected && getPlayers(Team.Explorers) == getMaxPlayers(Team.Explorers)
+				  && getPlayers(Team.Interceptors) == getMaxPlayers(Team.Interceptors))
 		{
 			startTime = new Date(new Date().getTime()+10000);
 			start();
