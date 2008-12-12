@@ -1,0 +1,42 @@
+module org {
+  module osll {
+    module roboracing {
+      module server {
+        module connector {
+          module corba {
+            module service {
+
+              struct Telemetry {
+                string xml;
+              };
+              
+              struct ControlCommand {
+                string xml;
+              };
+
+              struct PhysicalConstraints {
+                string xml;
+              };
+
+              struct Team {
+                string xml;
+              };
+
+              interface Control {
+                Telemetry getTelemetry(in string name);
+                void sendCommand(in string name, in ControlCommand command);
+                boolean isGameStarted();
+                PhysicalConstraints getPhysicalConstraints();
+                long long getTimeToStart();
+              };
+
+              interface ServerConnection {
+                string connect(in string name, in Team team);
+              };
+            };
+          };
+        };
+      };
+    };
+  };
+};

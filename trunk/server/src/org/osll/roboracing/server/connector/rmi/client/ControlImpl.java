@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
+import org.osll.roboracing.server.connector.DefaultOptions;
 import org.osll.roboracing.server.connector.rmi.Control;
 import org.osll.roboracing.world.ControlCommand;
 import org.osll.roboracing.world.PhysicalConstraints;
@@ -21,7 +22,7 @@ public class ControlImpl implements org.osll.roboracing.world.Control {
 		this.name = user;
 		this.team = team;
 		try {
-			Registry registry = LocateRegistry.getRegistry();
+			Registry registry = LocateRegistry.getRegistry(DefaultOptions.getHost());
 			server = (Control)registry.lookup(serviceName);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
