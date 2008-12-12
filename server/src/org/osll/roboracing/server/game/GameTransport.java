@@ -19,10 +19,10 @@ public class GameTransport {
 		new Thread(tcpServer).start();
 		udpServer = new org.osll.roboracing.server.connector.udp.GameServer(controller);
 		new Thread(udpServer).start();
-		rmiServer = new org.osll.roboracing.server.connector.rmi.GameServer(controller);
-		new Thread(rmiServer).start();
-		corbaServer = new org.osll.roboracing.server.connector.corba.GameServer(controller);
-		new Thread(corbaServer).start();
+//		rmiServer = new org.osll.roboracing.server.connector.rmi.GameServer(controller);
+//		new Thread(rmiServer).start();
+//		corbaServer = new org.osll.roboracing.server.connector.corba.GameServer(controller);
+//		new Thread(corbaServer).start();
 	}
 	
 	
