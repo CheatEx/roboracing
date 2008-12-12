@@ -86,7 +86,9 @@ public class ControllerImpl implements GameController {
 	@Override
 	public State getGameState() {
 		try {
-			newStateReady.wait();
+			synchronized (newStateReady) {
+				newStateReady.wait();
+			}
 		} catch (InterruptedException e) {
 			throw new RuntimeException(
 					"Thread interrupted while waiting for new game state", e);
@@ -211,7 +213,9 @@ public class ControllerImpl implements GameController {
 			
 			lastState = game.getState();
 			lastTime = game.getTime();
-			newStateReady.notifyAll();
+			synchronized (newStateReady) {
+				newStateReady.notifyAll();
+			}
 		}
 	}
 }
