@@ -6,6 +6,7 @@ import org.osll.roboracing.server.game.GameController;
 import org.osll.roboracing.server.game.GameTransport;
 import org.osll.roboracing.world.Checkpoint;
 import org.osll.roboracing.world.ControlCommand;
+import org.osll.roboracing.world.Coordinate;
 import org.osll.roboracing.world.Hill;
 import org.osll.roboracing.world.PhysicalConstraints;
 import org.osll.roboracing.world.Pit;
@@ -22,14 +23,18 @@ public class DummyGameController implements GameController {
 	public DummyGameController() {
 		m_constraints.setWorldRadius(200.);
 
-		ArrayList<Pit> pits = new ArrayList<Pit>();
-		pits.add(new Pit(123., 123., 10.));
-		m_state.setPits(pits);
+		m_state.setPits(new ArrayList<Pit>());
+		m_state.getPits().add(new Pit(123., 123., 10.));
+		
 		m_state.setHills(new ArrayList<Hill>());
+		m_state.getHills().add(new Hill(215,215, 30));
+
 		m_state.setRobots(new ArrayList<Robot>());
-		ArrayList<Checkpoint> checkpoints = new ArrayList<Checkpoint>();
-		checkpoints.add(new Checkpoint(160., 160.));
-		m_state.setCheckpoints(checkpoints);
+		m_state.getRobots().add(new Robot("Explorer",Team.Explorers, new Coordinate(300,200)));
+		m_state.getRobots().add(new Robot("Interceptor",Team.Interceptors, new Coordinate(100,300)));
+
+		m_state.setCheckpoints(new ArrayList<Checkpoint>());
+		m_state.getCheckpoints().add(new Checkpoint(160., 160.));
 	}
 
 	@Override
