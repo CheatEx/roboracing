@@ -1,7 +1,5 @@
 package org.osll.roboracing.server.game;
 
-import org.osll.roboracing.server.connector.tcp.GameServer;
-
 /**
  *  Траноспорт для взаимодействия с клиентами-игроками.
  *  Предоставляет доступ по различным протоколам. 
@@ -11,8 +9,8 @@ import org.osll.roboracing.server.connector.tcp.GameServer;
  */
 public class GameTransport {
 	
-	private GameServer tcpServer = null;
-	
+	private org.osll.roboracing.server.connector.tcp.GameServer tcpServer = null;
+	private org.osll.roboracing.server.connector.udp.GameServer udpServer = null;
 	public enum Type {
 		TCP,
 		UDP,
@@ -21,13 +19,19 @@ public class GameTransport {
 	}
 
 	public GameTransport(GameController controller) {
-		tcpServer = new GameServer(controller);
+		tcpServer = new org.osll.roboracing.server.connector.tcp.GameServer(controller);
 		new Thread(tcpServer).start();
+		udpServer = new org.osll.roboracing.server.connector.udp.GameServer(controller);
+		new Thread(udpServer).start();
 	}
 	
 	
 	public int getTcpPort() {
 		return tcpServer.getPort();
+	}
+	
+	public int getUdpPort() {
+		return udpServer.getPort();
 	}
 	
 }
