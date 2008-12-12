@@ -1,5 +1,7 @@
 package org.osll.roboracing.server.game;
 
+import org.osll.roboracing.server.connector.tcp.GameServer;
+import org.osll.roboracing.server.connector.tcp.LoginServer;
 import org.osll.roboracing.world.ControlCommand;
 import org.osll.roboracing.world.PhysicalConstraints;
 import org.osll.roboracing.world.State;
@@ -19,6 +21,13 @@ public interface GameController {
 	 * Starts the game.
 	 */
 	public void start();
+	public boolean isStarted();
+	
+	/**
+	 * получить оринетировачное время до страта
+	 * @return колчество миллисекунд до старта
+	 */
+	public long getTimeToStart();
 	
 	public PhysicalConstraints getConstraints();
 	
@@ -50,8 +59,29 @@ public interface GameController {
 	 */
 	public long getPlayers(Team team);
 	
-	
+	/**
+	 * Зарегистрировать заявку игрока на участие. Регистрирует {@link LoginServer}
+	 * @param name
+	 * @param team
+	 */
 	public void registerPlayer(String name, Team team);
 	
+	/**
+	 * Подключить игрока. Подключает уже {@link GameServer}. Подключение должно 
+	 * происходить лишь в том случае, когда была предварительная заявка. (:
+	 * @param name
+	 * @param team
+	 * @return true если смогли подключить
+	 */
+	public boolean connectPlayer(String name, Team team);
+	
+	/**
+	 * Получить объекты, отвечающие за передачу данных
+	 * @return
+	 */
 	public GameTransport getTransport();
+	
+	
+
+	
 }

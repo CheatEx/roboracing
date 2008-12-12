@@ -3,6 +3,7 @@ package org.osll.roboracing.server.game.controller;
 import java.util.ArrayList;
 
 import org.osll.roboracing.server.game.GameController;
+import org.osll.roboracing.server.game.GameTransport;
 import org.osll.roboracing.world.Checkpoint;
 import org.osll.roboracing.world.ControlCommand;
 import org.osll.roboracing.world.Hill;
@@ -10,6 +11,7 @@ import org.osll.roboracing.world.PhysicalConstraints;
 import org.osll.roboracing.world.Pit;
 import org.osll.roboracing.world.Robot;
 import org.osll.roboracing.world.State;
+import org.osll.roboracing.world.Team;
 import org.osll.roboracing.world.Telemetry;
 
 public class DummyGameController implements GameController {
@@ -57,6 +59,48 @@ public class DummyGameController implements GameController {
 	public void start() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public long getMaxPlayers(Team team) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public long getPlayers(Team team) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public GameTransport getTransport() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void registerPlayer(String name, Team team) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean connectPlayer(String name, Team team) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public long getTimeToStart() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean isStarted() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

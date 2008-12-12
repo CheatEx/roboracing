@@ -80,6 +80,7 @@ public class ControlImpl extends SocketProcessor implements Control {
 			throws IllegalStateException {
 		CommandQuery query = new CommandQuery();
 		query.setCommand(command);
+		query.setName(name);
 		write(socket,query);
 		
 		DefaultResponse response = (DefaultResponse) read(socket);

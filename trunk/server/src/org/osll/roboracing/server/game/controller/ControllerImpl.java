@@ -3,7 +3,6 @@ package org.osll.roboracing.server.game.controller;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Vector;
 import java.util.Map;
 
 import org.osll.roboracing.server.game.Game;
@@ -30,11 +29,13 @@ public class ControllerImpl implements GameController {
 			new HashMap<String, ControlCommand>();
 	
 	private Game game;
+	private boolean started = false;
+	private Date startTime = new Date(0); // ориентировачное время старта игры
 	
 	/**
 	 * набор объектов, которые предоставляют внешний интерфейс для этой игры
 	 */
-	private GameTransport transport = new GameTransport();
+	private GameTransport transport = new GameTransport(this);
 	
 	private class LoginInfo {
 		public String name = "";
@@ -45,7 +46,7 @@ public class ControllerImpl implements GameController {
 	/**
 	 * учет списка подавших заявку на полдключение
 	 */
-	private HashMap<Team, Vector<LoginInfo> > wantToLogin = new HashMap<Team, Vector<LoginInfo>>();
+	private HashMap<Team, HashMap<String, LoginInfo>> wantToLogin = new HashMap<Team, HashMap<String,LoginInfo>>();
 
 	/**
 	 * Game, that will be controlled. Game must be provided with appropriate map
@@ -54,8 +55,8 @@ public class ControllerImpl implements GameController {
 	 */
 	public ControllerImpl(Game game) {
 		this.game = game;
-		wantToLogin.put( Team.Explorers, new Vector<LoginInfo>());
-		wantToLogin.put( Team.Interceptors, new Vector<LoginInfo>());
+		wantToLogin.put( Team.Explorers, new HashMap<String, LoginInfo>());
+		wantToLogin.put( Team.Interceptors, new HashMap<String, LoginInfo>());
 	}
 	
 	@Override
@@ -85,7 +86,7 @@ public class ControllerImpl implements GameController {
 	@Override
 	public void start() {
 		// TODO Auto-generated method stub
-
+		started = true;
 	}
 	
 	@Override
@@ -116,11 +117,43 @@ public class ControllerImpl implements GameController {
 		LoginInfo info = new LoginInfo();
 		info.name = name;
 		info.team = team;
-		wantToLogin.get(team).add(info);
+		wantToLogin.get(team).put(name,info);
 	}
 
 	@Override
 	public GameTransport getTransport() {
 		return transport;
+	}
+
+	@Override
+	synchronized public boolean connectPlayer(String name, Team team) {
+		if(!wantToLogin.get(team).containsKey(name))
+			return false;
+		wantToLogin.get(team).get(name).isConnected = true;
+		boolean allConnected = true;
+		for (Team teamIt : wantToLogin.keySet()) {
+			for (String nameIt : wantToLogin.get(teamIt).keySet()) {
+				allConnected = allConnected && wantToLogin.get(teamIt).get(nameIt).isConnected;
+			}
+		}
+		if(allConnected)
+		{
+			startTime = new Date(new Date().getTime()+10000);
+			start();
+		}
+		return true;
+
+	}
+
+	@Override
+	synchronized public long getTimeToStart() {
+		if(startTime.getTime()==0)
+			return 10000;
+		return new Date().getTime() - startTime.getTime();
+	}
+
+	@Override
+	public boolean isStarted() {
+		return started;
 	}
 }
