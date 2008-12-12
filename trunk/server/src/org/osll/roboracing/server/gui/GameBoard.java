@@ -77,7 +77,7 @@ public class GameBoard extends JPanel implements ChangeListener {
 					1,0, 
 					1.0, 0.0, 
 					GridBagConstraints.NORTHWEST, 
-					GridBagConstraints.NONE, 
+					GridBagConstraints.HORIZONTAL, 
 					new Insets(5,5,5,5),
 					0,0));
 		GameStorageImpl.getInstance().addChangeListener(this);
@@ -87,10 +87,10 @@ public class GameBoard extends JPanel implements ChangeListener {
 	
 	private JComboBox createGameSelector() {
 		m_GameSelector = new JComboBox();
-		m_GameSelector.addItemListener(new ItemListener() {
+		m_GameSelector.addActionListener(new ActionListener(){
 
 			@Override
-			public void itemStateChanged(ItemEvent e) {
+			public void actionPerformed(ActionEvent arg0) {
 				int idx = m_GameSelector.getSelectedIndex();
 				if(idx>=0)
 				{
@@ -132,7 +132,10 @@ public class GameBoard extends JPanel implements ChangeListener {
 				for(;;)
 				{
 					if(m_Game!=null)
+					{
 						m_WorldMap.setState(m_Game.getGameState());
+						System.out.println(new Date());
+					}
 		    		try {
 						Thread.sleep(DELAY);
 					} catch (InterruptedException e) {
