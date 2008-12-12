@@ -92,8 +92,11 @@ public class GameBoard extends JPanel implements ChangeListener {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				int idx = m_GameSelector.getSelectedIndex();
-				GameController game = GameStorageImpl.getInstance().getGames().get(idx);
-				setGame(game);
+				if(idx>=0)
+				{
+					GameController game = GameStorageImpl.getInstance().getGames().get(idx);
+					setGame(game);
+				}
 			}
 			
 		});
@@ -106,8 +109,8 @@ public class GameBoard extends JPanel implements ChangeListener {
 	private void updateGameSelector() {
 		ArrayList<GameController> games = GameStorageImpl.getInstance().getGames();
 		m_GameSelector.removeAllItems();
-		for(int i=1; i<games.size();++i)
-			m_GameSelector.addItem(""+i);
+		for(int i=0; i<games.size();++i)
+			m_GameSelector.addItem(""+(i+1));
 		m_GameSelector.setSelectedIndex(games.indexOf(m_Game));
 		
 	}
