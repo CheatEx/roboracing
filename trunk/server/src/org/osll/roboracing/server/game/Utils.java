@@ -25,7 +25,6 @@ public final class Utils {
 	}
 
 	public static Coordinate plus(Robot robot, Coordinate normal) {
-		// TODO Auto-generated method stub
-		return null;
+		return new Coordinate(robot.getX()+normal.getY(),robot.getY()+normal.getY());
 	}
 }
