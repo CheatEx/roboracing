@@ -40,9 +40,9 @@ public class State extends Map implements Serializable {
 		return robots;
 	}
 
-	public void setRobots(ArrayList<Robot> robots) {
-		this.robots = robots;
-	}
+//	public void setRobots(ArrayList<Robot> robots) {
+//		this.robots = robots;
+//	}
 
 	public void setRobots(Collection<Robot> values) {
 		robots = values;

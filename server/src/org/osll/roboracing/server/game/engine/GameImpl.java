@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.osll.roboracing.server.game.Game;
-import org.osll.roboracing.server.game.Utils;
 import org.osll.roboracing.world.Checkpoint;
 import org.osll.roboracing.world.ControlCommand;
 import org.osll.roboracing.world.Coordinate;
