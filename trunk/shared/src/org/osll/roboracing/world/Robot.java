@@ -24,6 +24,12 @@ public class Robot extends WorldObject implements Speed,Serializable {
 		this.team = team; 
 	}
 	
+	public Robot(Robot r) {
+		this(r.getName(), r.getTeam(), new Coordinate(r.getX(), r.getY()));
+		vx = r.getVx();
+		vy = r.getVy();
+	}
+
 	/**
 	 * Name of robot. Must be unique on game land.
 	 * @return robot's name
