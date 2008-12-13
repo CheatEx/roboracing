@@ -110,7 +110,11 @@ public class GameImpl implements Game {
 		//t - время прохождения участка
 		double distance = linearSpeed*runTime + command.getAcceleration()*runTime*runTime/2.0;
 		//сектор окружности, пройденный за этот отрезок времени
-		double angle = distance/radius;
+		double angle;
+		if(radius!=0)
+			angle = distance/radius;
+		else	
+			angle = 0;
 		
 		//строим вектор, ортогональный скорости
 		Coordinate normal =  buildNormal(robot);
@@ -120,7 +124,9 @@ public class GameImpl implements Game {
 		}
 		//масштабируем его на радиус
 		double normalLength = module(normal);
-		double proportion = normalLength/radius;
+		double proportion = normalLength;
+		if(radius!=0)
+			proportion = normalLength/radius;
 		normal.setX(normal.getX()*proportion);
 		normal.setY(normal.getY()*proportion);
 		//теперь он указывает на центр аппроксимирующей окружности
