@@ -3,14 +3,18 @@ package org.osll.roboracing.server.game.engine;
 import static org.osll.roboracing.server.game.Utils.*;
 import static java.lang.Math.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.osll.roboracing.server.game.Game;
 import org.osll.roboracing.server.game.Utils;
+import org.osll.roboracing.world.Checkpoint;
 import org.osll.roboracing.world.ControlCommand;
 import org.osll.roboracing.world.Coordinate;
+import org.osll.roboracing.world.Hill;
 import org.osll.roboracing.world.Map;
 import org.osll.roboracing.world.PhysicalConstraints;
+import org.osll.roboracing.world.Pit;
 import org.osll.roboracing.world.Robot;
 import org.osll.roboracing.world.Speed;
 import org.osll.roboracing.world.State;
@@ -37,6 +41,14 @@ public class GameImpl implements Game {
 	public GameImpl(PhysicalConstraints constraints) {
 		this.constraints = constraints;
 		placer = new InitialPlacingStrategy(constraints.getWorldRadius());
+		Map m = new Map();
+		m.setPits(new ArrayList<Pit>());
+		m.getPits().add(new Pit(123., 123., 10.));
+		m.setHills(new ArrayList<Hill>());
+		m.getHills().add(new Hill(215,215, 30));
+		m.setCheckpoints(new ArrayList<Checkpoint>());
+		m.getCheckpoints().add(new Checkpoint(160., 160.));
+		setMap(m);
 	}
 	
 	@Override
@@ -51,7 +63,7 @@ public class GameImpl implements Game {
 
 	@Override
 	public State getState() {
-		return new State(state);
+		return state;
 	}
 
 	@Override
