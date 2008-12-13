@@ -1,4 +1,4 @@
-package org.osll.roboracing.world;
+ package org.osll.roboracing.world;
 
 import java.io.Serializable;
 
@@ -9,17 +9,17 @@ import java.io.Serializable;
  */
 public class PhysicalConstraints implements Serializable {
 	
-	private double maxVelocity;
+	private double maxVelocity = 25;
 	
-	private double maxAcceleration;
+	private double maxAcceleration = 10;
 	
-	private double maxAngularSpeed;
+	private double maxAngularSpeed = 0.8;
 	
-	private double dragCoefficient;
+	private double dragCoefficient = 1;
 	
-	private double visionRadius;
+	private double visionRadius = 10;
 	
-	private double worldRadius;
+	private double worldRadius = 10000;
 
 	public double getMaxVelocity() {
 		return maxVelocity;
