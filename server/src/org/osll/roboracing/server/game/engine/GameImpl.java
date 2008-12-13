@@ -105,7 +105,7 @@ public class GameImpl implements Game {
 		//наоборот, отрицательный - слева.
 		//R = V/W, где R - радиус аппроксимирующей окружности, V - начальная скорость
 		//на участке траектории, W - угловая скорость
-		double radius = linearSpeed/command.getAngularSpeed();
+		double radius = Math.abs(linearSpeed/command.getAngularSpeed());
 		//s = (a*t^2)/2, где s - путь, пройденный роботом, a - ускорение, заданное коммандой,
 		//t - время прохождения участка
 		double distance = linearSpeed*runTime + command.getAcceleration()*runTime*runTime/2.0;
@@ -145,7 +145,9 @@ public class GameImpl implements Game {
 
 		//теперь обновляем скорость
 		linearSpeed += command.getAcceleration()*runTime;
-		double speedAngle = atan(robot.getVy()/robot.getVx());
+		double speedAngle = 0;
+		if(robot.getVx()!=0 && robot.getVy()!=0)
+			speedAngle = atan(robot.getVy()/robot.getVx());
 		speedAngle += angle;
 		robot.setVx(linearSpeed*cos(speedAngle));
 		robot.setVy(linearSpeed*sin(speedAngle));
