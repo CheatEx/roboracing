@@ -1,6 +1,7 @@
 package org.osll.roboracing.zps;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import org.osll.roboracing.server.connector.ClientConnectionFactory;
@@ -50,14 +51,15 @@ public class StupidController {
 	
 	public void control() {
 		waitForStart();
-		Vector<Checkpoint> checkpoints = null;
+		ArrayList<Checkpoint> checkpoints = null;
 		int nextCheckpoint = 0;
 		Checkpoint checkpoint = null;
 		for(;;) {
 			Telemetry t = control.getTelemetry();
 			if(checkpoints==null) 
-				checkpoints = new Vector<Checkpoint>(t.getCheckpoints());
-			checkpoint = checkpoints.get(nextCheckpoint);
+				checkpoints = new ArrayList<Checkpoint>(t.getCheckpoints());
+			if(checkpoints.size()>0)
+				checkpoint = checkpoints.get(nextCheckpoint);
 			
 			double angle = getAngle(checkpoint,t);
 			
