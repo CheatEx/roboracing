@@ -19,6 +19,29 @@ public class Map implements Serializable{
 		return checkpoints;
 	}
 	
+	public Map(Collection<Checkpoint> checkpoints, Collection<Hill> hills,
+			Collection<Pit> pits) {
+		super();
+		this.checkpoints = checkpoints;
+		this.hills = hills;
+		this.pits = pits;
+	}
+
+	public Map(Map map) {
+		checkpoints = new ArrayList<Checkpoint>();
+		for(Checkpoint point : map.getCheckpoints())
+			checkpoints.add(new Checkpoint(point));
+		hills = new ArrayList<Hill>();
+		for(Hill hill: map.getHills())
+			hills.add(new Hill(hill));
+		pits = new ArrayList<Pit>();
+		for (Pit pit : pits) 
+			pits.add(new Pit(pit));
+		
+	}
+	public Map() {
+		
+	}
 	public Collection<Hill> getHills() {
 		return hills;
 	}

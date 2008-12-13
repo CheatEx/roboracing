@@ -21,7 +21,7 @@ public class WorldObject extends Coordinate implements Serializable {
 		super(x, y);
 		radius = r;
 	}
-
+	
 	public WorldObject(WorldObject obj) {
 		this(obj.getX(), obj.getY(), obj.getRadius());
 	}

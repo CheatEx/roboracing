@@ -17,6 +17,17 @@ public class State extends Map implements Serializable {
 		setPits(map.getPits());
 	}
 	
+	
+	
+	public State(State state) {
+		super(state);
+		robots = new ArrayList<Robot>();
+		for(Robot r : state.getRobots())
+			robots.add(new Robot(r));
+		}
+
+
+
 	public State() {
 	}
 

@@ -10,6 +10,10 @@ public class Checkpoint extends WorldObject implements Serializable {
 	public Checkpoint(double x, double y) {
 		super(x, y, 0);
 	}
+	
+	public Checkpoint(Checkpoint point) {
+		super(point);
+	}
 
 //	@Override
 //	public double getRadius() {
