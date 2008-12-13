@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * @author zan
  */
 public class Map implements Serializable{
 	

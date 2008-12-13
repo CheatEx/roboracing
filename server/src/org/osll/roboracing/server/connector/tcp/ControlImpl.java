@@ -72,7 +72,10 @@ public class ControlImpl extends SocketProcessor implements Control {
 	@Override
 	synchronized public boolean isGameStarted() {
 		write(socket,new IsStartedQuery());
-		return ((IsStartedResponse)read(socket)).isStarted();
+		DefaultResponse response = (DefaultResponse) read(socket);
+		if(response==null)
+			return false;
+		return ((IsStartedResponse)response).isStarted();
 	}
 
 	@Override

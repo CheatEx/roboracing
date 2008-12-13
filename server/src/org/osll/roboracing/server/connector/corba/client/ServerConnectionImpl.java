@@ -44,7 +44,7 @@ public class ServerConnectionImpl implements ServerConnection {
 	    NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
 	 
 	    // resolve the Object Reference in Naming
-	    String name = "Roboracing/LoginServer";
+	    String name = "Roboracing_LoginServer";
 	    try {
 			service = ServerConnectionHelper.narrow(ncRef.resolve_str(name));
 		} catch (NotFound e) {

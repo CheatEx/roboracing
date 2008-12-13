@@ -1,7 +1,6 @@
 package org.osll.roboracing.world;
 
 /**
- * @author zan
  */
 public interface Speed {
 

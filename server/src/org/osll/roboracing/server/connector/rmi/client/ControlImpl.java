@@ -25,11 +25,8 @@ public class ControlImpl implements org.osll.roboracing.world.Control {
 			Registry registry = LocateRegistry.getRegistry(DefaultOptions.getHost());
 			server = (Control)registry.lookup(serviceName);
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (NotBoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new IllegalStateException("Couldn't connect to registry");
 		}
 	}
 	@Override
@@ -38,8 +35,6 @@ public class ControlImpl implements org.osll.roboracing.world.Control {
 		try {
 			c = server.getPhysicalConstraints();
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			throw new IllegalStateException("RemoteError");
 		}
 		return c;
@@ -51,8 +46,6 @@ public class ControlImpl implements org.osll.roboracing.world.Control {
 		try {
 			t = server.getTelemetry(name);
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			throw new IllegalStateException("RemoteError");
 		}
 		return t;
@@ -64,8 +57,6 @@ public class ControlImpl implements org.osll.roboracing.world.Control {
 		try {
 			t = server.getTimeToStart();
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			throw new IllegalStateException("RemoteError");
 		}
 		return t;
@@ -77,9 +68,7 @@ public class ControlImpl implements org.osll.roboracing.world.Control {
 		try {
 			s = server.isGameStarted();
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new IllegalStateException("RemoteError");
+			throw new IllegalStateException("Connection refused");
 		}
 		return s;
 	}
@@ -90,8 +79,6 @@ public class ControlImpl implements org.osll.roboracing.world.Control {
 		try {
 			server.sendCommand(name, command);
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			throw new IllegalStateException("RemoteError");
 		}
 	}

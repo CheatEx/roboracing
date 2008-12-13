@@ -5,7 +5,6 @@ import java.io.Serializable;
 /**
  * Container for some physical constraints applied to our robots.
  * 
- * @author zan
  */
 public class PhysicalConstraints implements Serializable {
 	

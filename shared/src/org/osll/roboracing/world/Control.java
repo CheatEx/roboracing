@@ -4,7 +4,6 @@ package org.osll.roboracing.world;
 /**
  * Interface for controlling robot, receive telemetry and general game info.
  *  
- * @author zan
  */
 public interface Control {
 

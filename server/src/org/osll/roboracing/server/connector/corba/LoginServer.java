@@ -72,7 +72,7 @@ public class LoginServer implements Runnable {
 	    // bind the Object Reference in Naming
 	    NameComponent path[] = null;
 		try {
-			path = ncRef.to_name( "Roboracing/LoginServer" );
+			path = ncRef.to_name( "Roboracing_LoginServer" );
 		} catch (org.omg.CosNaming.NamingContextPackage.InvalidName e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
