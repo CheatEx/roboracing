@@ -19,7 +19,7 @@ public class PhysicalConstraints implements Serializable {
 	
 	private double visionRadius = 10;
 	
-	private double worldRadius = 10000;
+	private double worldRadius = 1000.;
 
 	public double getMaxVelocity() {
 		return maxVelocity;
