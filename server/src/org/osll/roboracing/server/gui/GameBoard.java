@@ -134,7 +134,7 @@ public class GameBoard extends JPanel implements ChangeListener {
 					if(m_Game!=null)
 					{
 						m_WorldMap.setState(m_Game.getGameState());
-						System.out.println(new Date());
+//						System.out.println(new Date());
 					}
 		    		try {
 						Thread.sleep(DELAY);
