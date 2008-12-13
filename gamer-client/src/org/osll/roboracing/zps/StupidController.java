@@ -85,6 +85,6 @@ public class StupidController {
 		}
 		
 		
-		return 0;
+		return 200*Math.random()-100;
 	}
 }

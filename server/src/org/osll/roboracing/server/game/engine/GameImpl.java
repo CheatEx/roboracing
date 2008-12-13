@@ -22,7 +22,7 @@ import org.osll.roboracing.world.Team;
  */
 public class GameImpl implements Game {
 
-	private Map map;
+	private Map map = new Map();
 	
 	private State state;
 	
@@ -51,7 +51,7 @@ public class GameImpl implements Game {
 
 	@Override
 	public State getState() {
-		return null;
+		return new State(state);
 	}
 
 	@Override
@@ -71,6 +71,8 @@ public class GameImpl implements Game {
 			prepareFirstRun();
 		for (Robot robot: robots.values()) {
 			ControlCommand command = commands.get(robot.getName());
+			if(command == null)
+				continue;
 			calcNewCoord(robot, runTime, command);
 		}
 
@@ -151,7 +153,11 @@ public class GameImpl implements Game {
 	}
 
 	private void prepareFirstRun() {
-		state = new State(map);
+		try {
+			state = new State(map);
+		} catch (Exception ex) {
+		   ex.printStackTrace();
+		}
 		state.setRobots(robots.values());
 	}
 
