@@ -33,7 +33,10 @@ public class GameServer implements Runnable {
 		public void run() {
 			for(;;) {
 				DefaultQuery query = (DefaultQuery)read(socket);
-				
+				if(query==null)	{
+					System.out.println("Query is null");
+					return;
+				}
 				switch (query.getType()) {
 				case GET_CONNECT:
 				{

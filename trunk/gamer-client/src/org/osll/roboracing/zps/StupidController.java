@@ -14,7 +14,14 @@ import org.osll.roboracing.world.ServerConnection;
 import org.osll.roboracing.world.Team;
 import org.osll.roboracing.world.Telemetry;
 
-public class StupidController {
+public class StupidController implements Runnable {
+
+	@Override
+	public void run() {
+		for(;;) {
+			control();
+		}
+	}
 	
 	ServerConnection conn = null;
 	
@@ -31,11 +38,8 @@ public class StupidController {
 			control = conn.connect(name, team);
 			phy = control.getPhysicalConstraints();
 		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw e;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 	
@@ -54,6 +58,7 @@ public class StupidController {
 		ArrayList<Checkpoint> checkpoints = null;
 		int nextCheckpoint = 0;
 		Checkpoint checkpoint = null;
+		double lastAngle = 0;
 		for(;;) {
 			Telemetry t = control.getTelemetry();
 			if(checkpoints==null) 
@@ -61,7 +66,9 @@ public class StupidController {
 			if(checkpoints.size()>0)
 				checkpoint = checkpoints.get(nextCheckpoint);
 			
-			double angle = getAngle(checkpoint,t);
+			double angle = lastAngle + getAngle(checkpoint,t);
+			if(angle > 360)
+				angle -= 360.;
 			
 			ControlCommand command = new ControlCommand();
 			command.setAcceleration(phy.getMaxAcceleration());
@@ -87,6 +94,6 @@ public class StupidController {
 		}
 		
 		
-		return 200*Math.random()-100;
+		return 10*Math.random();
 	}
 }

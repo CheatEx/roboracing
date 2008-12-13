@@ -3,7 +3,6 @@ package org.osll.roboracing.world;
 import java.io.Serializable;
 
 /**
- * @author zan
  */
 public class Pit extends WorldObject implements Serializable{
 

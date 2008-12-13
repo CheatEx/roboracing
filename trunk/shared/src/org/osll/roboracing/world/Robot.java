@@ -3,7 +3,6 @@ package org.osll.roboracing.world;
 import java.io.Serializable;
 
 /**
- * @author zan
  */
 public class Robot extends WorldObject implements Speed,Serializable {
 	

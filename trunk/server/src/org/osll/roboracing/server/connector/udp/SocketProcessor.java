@@ -21,8 +21,6 @@ public class SocketProcessor {
 		try {
 			socket.receive(packet);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			throw new IllegalStateException("Could't send packet");
 		}
 		return read(packet);
@@ -36,12 +34,8 @@ public class SocketProcessor {
 			try {
 				object = s.readObject();
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		
 		return object;
@@ -54,8 +48,7 @@ public class SocketProcessor {
 			s.writeObject(object);
 			s.flush();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new IllegalStateException("socker error");
 		}		
 		try {
 			if(socketAddress!=null)
@@ -63,11 +56,9 @@ public class SocketProcessor {
 		    if(socketAddress==null)
 		    	socket.send(new DatagramPacket(os.toByteArray(),os.toByteArray().length));
 		} catch (SocketException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new IllegalStateException("socker error");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new IllegalStateException("socker error");
 		}
 	}
 

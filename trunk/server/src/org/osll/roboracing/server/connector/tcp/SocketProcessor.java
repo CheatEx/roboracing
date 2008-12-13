@@ -17,17 +17,22 @@ public class SocketProcessor {
 		try {
 			ois = new ObjectInputStream(socket.getInputStream());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			try {
+				socket.close();
+			} catch (IOException e1) {
+			}
+			throw new IllegalStateException("socket error"); 
 		}
 		try {
 			response = ois.readObject();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			try {
+				socket.close();
+			} catch (IOException e1) {
+			}
+			Thread.currentThread().interrupt();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new IllegalStateException("recived incorrect object");
 		}
 		return response;
 	}
@@ -37,20 +42,18 @@ public class SocketProcessor {
 		try {
 			oos = new ObjectOutputStream(socket.getOutputStream());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		try {
 			oos.writeObject(obj);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			try {
+				socket.close();
+			} catch (IOException e1) {
+			}
 		}
 		try {
 			oos.flush();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 

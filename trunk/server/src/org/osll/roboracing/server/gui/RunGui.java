@@ -2,6 +2,7 @@ package org.osll.roboracing.server.gui;
 
 import javax.swing.JFrame;
 
+import org.osll.roboracing.server.connector.DefaultOptions;
 import org.osll.roboracing.server.connector.tcp.LoginServer;
 import org.osll.roboracing.server.game.controller.DummyGameController;
 
@@ -27,9 +28,9 @@ public class RunGui {
 		f.setSize(500, 500);
 		f.setVisible(true);
 		
-		new Thread(new LoginServer(7777)).start();
-//		new Thread(new org.osll.roboracing.server.connector.corba.LoginServer()).start();
-//		new Thread(new org.osll.roboracing.server.connector.rmi.LoginServer()).start();
+		new Thread(new LoginServer(DefaultOptions.getTcpPort())).start();
+		new Thread(new org.osll.roboracing.server.connector.corba.LoginServer()).start();
+		new Thread(new org.osll.roboracing.server.connector.rmi.LoginServer()).start();
 		new Thread(new org.osll.roboracing.server.connector.udp.LoginServer()).start();
 
 	}

@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * @author zan
  */
 public class State extends Map implements Serializable {
 
