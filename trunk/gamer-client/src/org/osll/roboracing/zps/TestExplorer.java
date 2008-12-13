@@ -11,7 +11,7 @@ public class TestExplorer {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
-		StupidController c = new StupidController(Type.UDP);
+		StupidController c = new StupidController(Type.TCP);
 		c.connect("zps", Team.Explorers);
 		c.control();
 	}

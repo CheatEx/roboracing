@@ -10,7 +10,7 @@ public class TestIntercepter {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		StupidController c = new StupidController(Type.UDP);
+		StupidController c = new StupidController(Type.TCP);
 		c.connect("zan", Team.Interceptors);
 		c.control();
 	}
