@@ -152,6 +152,14 @@ public class GameImpl implements Game {
 		robot.setVx(linearSpeed*cos(speedAngle));
 		robot.setVy(linearSpeed*sin(speedAngle));
 		//во срань получилась...
+		
+		//i don't care how you've got it, but please stay in my world
+		double x=robot.getX(), y=robot.getY(), r = getPhysicalConstraints().getWorldRadius();
+		double k = Math.sqrt(x*x+y*y)/r; 
+		if(k>1) {
+			robot.setX(x/k);
+			robot.setY(y/k);
+		}
 	}
 
 	private boolean wrongDirection(Speed robot, Coordinate normal, boolean right) {

@@ -54,6 +54,7 @@ public class WorldRound extends JPanel {
 
 	@Override
 	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
 		paintBackground(g);
 		if (m_State != null)
 			paintObjects(g);
@@ -93,8 +94,8 @@ public class WorldRound extends JPanel {
 		g.setColor(color);
 		double k = getNormCoef();
 		int r =(int) (o.getRadius() * k); //radius in screen srd
-		int x = (int) (o.getX()*k); //screen crd
-		int y = (int) (o.getY()*k);
+		int x = (int) ((o.getX()+m_WorldRadius)*k); //screen crd
+		int y = (int) ((o.getY()+m_WorldRadius)*k);
 		g.fillOval(x-r,y-r,2*r, 2*r);
 		g.setColor(BOUNDS_COLOR);
 		g.drawOval(x-r,y-r, 2*r, 2*r);
@@ -104,8 +105,8 @@ public class WorldRound extends JPanel {
 		Graphics g = getGraphics();
 		g.setColor(CHECKPOINT_COLOR);
 		double k = getNormCoef();
-		int x = (int) (crd.getX() *k);
-		int y = (int) (crd.getY() *k);
+		int x = (int) ((crd.getX()+m_WorldRadius) *k);
+		int y = (int) ((crd.getY()+m_WorldRadius) *k);
 		g.drawLine(x - CROSS_SIZE / 2, y - CROSS_SIZE / 2,
 				x + CROSS_SIZE / 2,	y + CROSS_SIZE / 2);
 		g.drawLine(x + CROSS_SIZE / 2, y - CROSS_SIZE / 2,
@@ -117,8 +118,8 @@ public class WorldRound extends JPanel {
 		Graphics g = getGraphics();
 		g.setColor(getTeamColor(robot.getTeam()));
 		double k = getNormCoef();
-		int x = (int) (robot.getX()*k);
-		int y = (int) ((robot.getY()-robot.getRadius())*k)-1;
+		int x = (int) ((robot.getX()+m_WorldRadius)*k);
+		int y = (int) ((robot.getY()+m_WorldRadius-robot.getRadius())*k)-1;
 		g.drawString(robot.getName(), x, y);
 	}
 	
