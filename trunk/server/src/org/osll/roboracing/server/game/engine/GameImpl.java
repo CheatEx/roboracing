@@ -42,11 +42,17 @@ public class GameImpl implements Game {
 		placer = new InitialPlacingStrategy(constraints.getWorldRadius());
 		Map m = new Map();
 		m.setPits(new ArrayList<Pit>());
-		m.getPits().add(new Pit(123., 123., 10.));
+		m.getPits().add(new Pit(553., -123., 50.));
+		m.getPits().add(new Pit(-300., 500., 85.));
 		m.setHills(new ArrayList<Hill>());
-		m.getHills().add(new Hill(215,215, 30));
+		m.getHills().add(new Hill(315,715, 70));
+		m.getHills().add(new Hill(-720,50, 120));
+		m.getHills().add(new Hill(20,-650, 100));
+		m.getHills().add(new Hill(50,-20, 180));
 		m.setCheckpoints(new ArrayList<Checkpoint>());
-		m.getCheckpoints().add(new Checkpoint(160., 160.));
+		m.getCheckpoints().add(new Checkpoint(160., 230.));
+		m.getCheckpoints().add(new Checkpoint(-300, -470));
+		m.getCheckpoints().add(new Checkpoint(400, -600));
 		setMap(m);
 	}
 	
