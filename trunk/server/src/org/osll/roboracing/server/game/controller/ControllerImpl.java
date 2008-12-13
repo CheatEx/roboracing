@@ -30,7 +30,7 @@ public class ControllerImpl implements GameController {
 
 	private static final double GAME_STEP = 0.1;
 
-	private static final int UPDATE_RATE = 100;
+	private static final int UPDATE_RATE = 500;
 
 	private static TelemetryFactory telemetryFactory =
 			TelemetryFactory.instance();
