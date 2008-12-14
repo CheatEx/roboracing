@@ -23,6 +23,7 @@ module org {
               };
 
               interface Control {
+                void connect(in string name, in Team team);
                 Telemetry getTelemetry(in string name);
                 void sendCommand(in string name, in ControlCommand command);
                 boolean isGameStarted();

@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 
 import org.osll.roboracing.world.ControlCommand;
 import org.osll.roboracing.world.PhysicalConstraints;
+import org.osll.roboracing.world.Team;
 import org.osll.roboracing.world.Telemetry;
 
 /**
@@ -12,6 +13,7 @@ import org.osll.roboracing.world.Telemetry;
  */
 public interface Control extends Remote {
 
+	public void connectPlayer(String name, Team team) throws RemoteException;
 	/**
 	 * This method isn't cheat-safe (:
 	 * @param roboName name of robot, who received picture

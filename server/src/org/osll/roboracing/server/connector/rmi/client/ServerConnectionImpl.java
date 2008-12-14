@@ -18,7 +18,7 @@ public class ServerConnectionImpl implements org.osll.roboracing.world.ServerCon
 	public ServerConnectionImpl() {
 		try {
 			Registry registry = LocateRegistry.getRegistry(DefaultOptions.getHost());
-			service = (ServerConnection)registry.lookup("Roboracing/LoginServer");
+			service = (ServerConnection)registry.lookup("Roboracing_LoginServer");
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
