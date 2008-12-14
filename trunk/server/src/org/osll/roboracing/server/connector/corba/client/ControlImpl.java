@@ -50,7 +50,8 @@ public class ControlImpl implements Control {
 	 
 	    // resolve the Object Reference in Naming
 	    try {
-			service = ControlHelper.narrow(ncRef.resolve_str(name));
+			service = ControlHelper.narrow(ncRef.resolve_str(serviceName));
+			service.connect(name, Adapter.convertTeam(team));
 		} catch (NotFound e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

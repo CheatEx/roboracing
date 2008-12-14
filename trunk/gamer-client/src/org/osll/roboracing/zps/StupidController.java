@@ -78,21 +78,21 @@ public class StupidController implements Runnable {
 	}
 
 	private double getAngle(Checkpoint checkpoint, Telemetry tel) {
-		Vector<Pit> pits = new Vector<Pit>(tel.getPits());
-		Math2DVector V = new Math2DVector(tel.getSelf().getVx(),tel.getSelf().getVx());
-		Math2DVector P = new Math2DVector(tel.getSelf().getX(),tel.getSelf().getY());
-		double minDist = 1e16;
-		Pit warrning = null;
-		for (Pit pit : pits) {
-			double dist = P.diff(new Math2DVector(pit.getX(),pit.getY()));
-			if(dist<minDist) {
-				double alpha = P.sub(new Math2DVector(pit.getX(),pit.getY())).getAlpha();
-				
-				minDist = dist;
-				warrning = pit;
-			}
-		}
-		
+//		Vector<Pit> pits = new Vector<Pit>(tel.getPits());
+//		Math2DVector V = new Math2DVector(tel.getSelf().getVx(),tel.getSelf().getVx());
+//		Math2DVector P = new Math2DVector(tel.getSelf().getX(),tel.getSelf().getY());
+//		double minDist = 1e16;
+//		Pit warrning = null;
+//		for (Pit pit : pits) {
+//			double dist = P.diff(new Math2DVector(pit.getX(),pit.getY()));
+//			if(dist<minDist) {
+//				double alpha = P.sub(new Math2DVector(pit.getX(),pit.getY())).getAlpha();
+//				
+//				minDist = dist;
+//				warrning = pit;
+//			}
+//		}
+//		
 		
 		return 10*Math.random();
 	}

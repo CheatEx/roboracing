@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import org.osll.roboracing.server.game.GameController;
 import org.osll.roboracing.world.ControlCommand;
 import org.osll.roboracing.world.PhysicalConstraints;
+import org.osll.roboracing.world.Team;
 import org.osll.roboracing.world.Telemetry;
 
 public class ControlImpl implements Control {
@@ -41,6 +42,12 @@ public class ControlImpl implements Control {
 			throws IllegalStateException, RemoteException {
 		controller.putCommand(name, command);
 
+	}
+
+	@Override
+	public void connectPlayer(String name, Team team) throws RemoteException {
+		controller.connectPlayer(name, team);
+		
 	}
 
 }

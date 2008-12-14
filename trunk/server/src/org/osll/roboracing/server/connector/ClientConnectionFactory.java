@@ -18,7 +18,7 @@ public class ClientConnectionFactory {
 			con = new org.osll.roboracing.server.connector.rmi.client.ServerConnectionImpl();
 		    break;
 	    case CORBA:
-	    	con = new org.osll.roboracing.server.connector.rmi.client.ServerConnectionImpl();
+	    	con = new org.osll.roboracing.server.connector.corba.client.ServerConnectionImpl();
 	    	break;
 	    case TCP:
 	    	con = new org.osll.roboracing.server.connector.tcp.ServerConnectionImpl(DefaultOptions.getHost(),DefaultOptions.getTcpPort());

@@ -3,6 +3,7 @@ package org.osll.roboracing.server.connector.corba;
 import org.osll.roboracing.server.connector.corba.service.ControlCommand;
 import org.osll.roboracing.server.connector.corba.service.ControlPOA;
 import org.osll.roboracing.server.connector.corba.service.PhysicalConstraints;
+import org.osll.roboracing.server.connector.corba.service.Team;
 import org.osll.roboracing.server.connector.corba.service.Telemetry;
 import org.osll.roboracing.server.game.GameController;
 
@@ -37,6 +38,12 @@ public class ControlServant extends ControlPOA {
 	@Override
 	public void sendCommand(String name, ControlCommand command) {
 		controller.putCommand(name, Adapter.convertCommand(command));
+	}
+
+	@Override
+	public void connect(String name, Team team) {
+		controller.connectPlayer(name, Adapter.convertTeam(team));
+		
 	}
 
 }

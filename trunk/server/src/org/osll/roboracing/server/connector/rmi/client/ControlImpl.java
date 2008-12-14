@@ -19,12 +19,15 @@ public class ControlImpl implements org.osll.roboracing.world.Control {
 	private Team team;
 	
 	public ControlImpl(String serviceName, String user, Team team) {
+		System.out.println("RMI connecting" + serviceName);
 		this.name = user;
 		this.team = team;
 		try {
 			Registry registry = LocateRegistry.getRegistry(DefaultOptions.getHost());
 			server = (Control)registry.lookup(serviceName);
+			server.connectPlayer(user, team);
 		} catch (RemoteException e) {
+			e.printStackTrace();
 		} catch (NotBoundException e) {
 			throw new IllegalStateException("Couldn't connect to registry");
 		}

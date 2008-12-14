@@ -14,7 +14,7 @@ public class LoginServer implements Runnable {
 			engine = new ServerConnectionImpl();
 			stub = (ServerConnection)UnicastRemoteObject.exportObject(engine, 0);
 			Registry registry = LocateRegistry.getRegistry();
-            registry.rebind("Roboracing/LoginServer", stub);
+            registry.rebind("Roboracing_LoginServer", stub);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
